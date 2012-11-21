@@ -13,17 +13,21 @@
 #include <algorithm>
 #include "input.h"
 
-Agustin Brian Federico
+Agustin Brian Federico 
+
+#define COVERGREEDY
+#define COVERDP
 
 #define INSTANCIA "nuestraInstancia.lp"
 #define JOYA if(status)errorHandler(status,env)
+#define ULTIMO(fila) (fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])
 
 static int losCutCallbacks(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void theGreatGomoryCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom);
-//int dpForCovern(int fila, CPXCENV ptr env, void *cbdate, int wherefrom);
+int dpForCovern(int fila, CPXCENVptr env, void *cbdate, int wherefrom);
 
 
 
@@ -104,7 +108,9 @@ int main(int argc, char *argv[]){
   //~ if ( status ) exit(-1);
   
   
-  if(!isParam("-c", argv, argc)){
+  if(isParam("-c", argv, argc)){
+    cerr << " USANDO EL VERDADERO PODER DE CPLEX " << endl;
+  }else{
     status = CPXsetintparam(env, CPX_PARAM_PREIND, 0);
     status = CPXsetintparam(env, CPX_PARAM_PRELINEAR, 0);
     status = CPXsetintparam(env, CPX_PARAM_EACHCUTLIM, 0);
@@ -163,7 +169,7 @@ int main(int argc, char *argv[]){
     if(laMeto)lasMochila.push_back(i);
   }
   
-  cerr << endl << endl << endl << "Total de filas: " << cantFilasMochila << endl << "Total mochila: " << lasMochila.size() << endl << endl;
+  cerr <<  endl << "Total de filas: " << cantFilasMochila << endl << "Total mochila: " << lasMochila.size() << endl << endl;
   
   
   //~ for(int i=0;i<cantFilas;++i){
@@ -192,9 +198,9 @@ int main(int argc, char *argv[]){
   }
   
   status = CPXgetx(env, lp, xestrella, 0, cantVar-1);
-  for(int i=0;i<cantVar;++i){
-    cerr << xestrella[i] << endl;
-  }
+  //for(int i=0;i<cantVar;++i){
+    //cerr << xestrella[i] << endl;
+  //}
   printf ("Valor de la solucion  = %f\n\n", objval);
   
   
@@ -223,18 +229,17 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
   //Variable para ver que heuristica o exacto corremos
   int tengoCover = 0;
   
+  #ifdef COVERGREEDY
+    for(int i=0;i<(int)lasMochila.size();++i){
+      tengoCover += greedyForCovern(lasMochila[i], env, cbdata, wherefrom);
+    }
+  #endif
   
-  for(int i=0;i<(int)lasMochila.size();++i){
-    tengoCover += greedyForCovern(lasMochila[i], env, cbdata, wherefrom);
-  }
-  
-  //for(int i=0;!tengoCover&&i<(int)lasMochila.size();++i){
-    //tengoCover += dpForCovern(lasMochila[i], env, cbdata, wherefrom);
-  //}
-  
-  
-  
-  //~ cerr << "I tried to dis covern!!!" << endl;
+  #ifdef COVERDP
+    for(int i=0;!tengoCover&&i<(int)lasMochila.size();++i){
+      tengoCover += dpForCovern(lasMochila[i], env, cbdata, wherefrom);
+    }
+  #endif
   
   if(tengoCover)*useraction_p = CPX_CALLBACK_SET;
   return;
@@ -259,83 +264,98 @@ void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int
 }
 
 
-//int dpForCovern(int fila, CPXCENV ptr env, void *cbdate, int wherefrom){
-  //int tengoCover = 0;
-  //bMochila = rhsMochila[fila]++;
-  //if(bmochila>1000){
-    //cerr << "Muy grande el b como para hacer dp" << endl;
-    //return 0;
-  //}
-  //
-  //double dpMochila[2][bMochila+5];
-  //int dpPrevMochila[(fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])-rmatbegMochila[fila]][bMochila+5];
-  //int act = 0;
-  //dpMochila[0][0] = 0;
-  //dpPrevMochila[0][0] = 0;
-  //for(int j=1;j<bMochila;++j){
-    //if(j<=rmatvalMochila[rmatbegMochila[fila]]){
-      //dpMochila[0][j] = (1-xestrella[rmatindMochila[rmatbegMochila[fila]]]);
-      //dpPrevMochila[0][j] = 1;
-    //}else{
-      //dpMochila[0][j] = 10e100;
-      //dpPrevMochila[0][j] = 0;
+int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
+  int tengoCover = 0;
+  int bMochila = rhsMochila[fila] + 1;
+  if(bMochila>2005){
+    cerr << "Muy grande el b como para hacer dp " << bMochila << endl;
+    return 0;
+  }
+  
+  
+  double dpMochila[2][bMochila+5];
+  int dpPrevMochila[ULTIMO(fila)-rmatbegMochila[fila]][bMochila+5];
+  memset(dpPrevMochila,-1,sizeof dpPrevMochila);
+  int ant=1,act=0;
+  
+  dpMochila[0][0] = 0;
+  dpMochila[0][1] = 0;
+  
+  for(int j=1;j<=bMochila;++j){
+    dpMochila[ant][j] = 1e100;
+    
+    if(j<=rmatvalMochila[rmatbegMochila[fila]]){
+      dpMochila[act][j] = (1-xestrella[rmatindMochila[rmatbegMochila[fila]]]);
+      dpPrevMochila[0][j] = 0;
+    }else{
+      dpMochila[act][j] = 1e100;
+    }
+  }
+  
+  for(int i=rmatbegMochila[fila]+1;i<ULTIMO(fila);++i){
+    swap(act,ant);
+    for(int j=0;j<=bMochila;++j) dpMochila[act][j]=dpMochila[ant][j];
+    
+    for(int j=0;j<=bMochila;++j){  // Recorro todos los valores que tenia
+      if( (1-xestrella[rmatindMochila[i]]) + dpMochila[ant][j] <= 
+           dpMochila[act][min(bMochila,j+((int)rmatvalMochila[i]))])
+      {
+        dpMochila[act][min(bMochila,j+((int)rmatvalMochila[i]))] = (1-xestrella[rmatindMochila[i]]) + dpMochila[ant][j];
+        dpPrevMochila[i-rmatbegMochila[fila]][min(bMochila,j+((int)rmatvalMochila[i]))] = j;
+      }
+    }
+  
+  }
+  
+  
+  
+  if(dpMochila[act][bMochila] < 0.99){
+    cerr << "Cover violado por DP" << endl;
+    //for(int i=0;i<ULTIMO(fila)-rmatbegMochila[fila];cerr<<endl,i++){
+      //for(int j=0;j<=bMochila;j++) cerr << dpPrevMochila[i][j] << ' ' ;
     //}
-  //}
-  //for(int i=rmatbegMochila[fila]+1;i<(fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1]);++i){
-    //for(int j=0;j<bMochila;++j){
-      //~ dpMochila[act%2][j] = min((1-xestrella[rmatindMochila[i]])+dpMochila[(act-1)%2][max(0,j-(rmatvalMochila[i]))],dpMochila[(act-1)%2][j]);
-      //if((1-xestrella[rmatindMochila[i]])+dpMochila[(act-1)%2][max(0,j-(rmatvalMochila[i]))] < dpMochila[(act-1)%2][j]){
-        //dpMochila[act%2][j] = (1-xestrella[rmatindMochila[i]])+dpMochila[(act-1)%2][max(0,j-(rmatvalMochila[i]))];
-        //dpPrevMochila[i-rmatbegMochila[fila]][j] = 1;
-      //}else{
-        //dpMochila[act%2][j] = dpMochila[(act-1)%2][j];
-        //dpPrevMochila[i-rmatbegMochila[fila]][j] = 0;
-      //}
-    //}
-    //act++;
-  //}
-  //
-  //
-  //
-  //if(dpMochila[(fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])-rmatbegMochila[fila]-1][bMochila] < 0.99){
-    //cerr << "Cover violado por DP" << endl;
-    //~ exit(-1);
-    //
+    
     //Hay que recuperar la solucion y ahi generar el corte
-    //
-    //
-    //double rhs = i-1.;
-    //~ cerr << "Dios mio alto corte: " << endl << endl;
-    //~ cerr << rhs << endl;
-    //int noZeroCount = i;
-    //
-    //int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
-    //double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
-    //for(int j=0;j<i;++j){
-      //cut_matind[j] = rmatindMochila[vec[j].second];
-      //cut_matval[j] = 1.0;
-      //cerr << rmatindMochila[vec[j].second] << endl;
-    //}
-    //CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
-    //tengoCover++;
-  //}
-  //
-  //return tengoCover;
-//}
+    vector<int> usados;
+    int columna=bMochila;
+    int pfila=ULTIMO(fila)-rmatbegMochila[fila]-1;
+    while(pfila>=0){
+      if(dpPrevMochila[pfila][columna]==-1) pfila--;
+      else{
+        usados.push_back(pfila);
+        columna=dpPrevMochila[pfila][columna];
+        pfila--;
+      }
+    }
+       
+    
+    double rhs = usados.size()-1.;
+    int noZeroCount = usados.size();
+    
+    int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
+    double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
+    for(int j=0;j<(int)usados.size();++j){
+      cut_matind[j] = rmatindMochila[usados[j]+rmatbegMochila[fila]];
+      cut_matval[j] = 1.0;
+    }
+    CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
+    tengoCover++;
+  }
+  
+  return tengoCover;
+}
 
 int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
-  int tengoCover = 0;
-  
-  
+  int tengoCover = 0;  
   bMochila = rhsMochila[fila];
   
   
   //Greedy 1 (A_j/(1-x_j)
   vector<pair<double, int> > vec;
-  for(int i=rmatbegMochila[fila];i<(fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1]);++i){
+  for(int i=rmatbegMochila[fila];i<ULTIMO(fila);++i){
     vec.push_back(pair<double,int>(rmatvalMochila[i]/(1-xestrella[rmatindMochila[i]]),i));
-    cerr << "Toda la info: " << "el i " << i << endl << "el valor: " << (rmatvalMochila[i]/(1-xestrella[rmatindMochila[i]])) << endl;
-    cerr << "rmatvalMochila: " << rmatvalMochila[i] << " lo otro " << 1-xestrella[rmatindMochila[i]] << endl;
+    //cerr << "Toda la info: " << "el i " << i << endl << "el valor: " << (rmatvalMochila[i]/(1-xestrella[rmatindMochila[i]])) << endl;
+    //cerr << "rmatvalMochila: " << rmatvalMochila[i] << " lo otro " << 1-xestrella[rmatindMochila[i]] << endl;
   }
   sort(vec.begin(),vec.end(), greater<pair<double,int> >());
   
@@ -351,10 +371,9 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   //Preguntamos si los pesos suman menos que 1 (si es asi, hay un corte violado)
   if(acumPesos < .99 && acumA>bMochila+0.5){
     cerr << "Cover violado" << endl;
-    //~ exit(-1);
     double rhs = i-1.;
-    cerr << "Dios mio alto corte: " << endl << endl;
-    cerr << rhs << endl;
+    //cerr << "Dios mio alto corte: " << endl << endl;
+    //cerr << rhs << endl;
     int noZeroCount = i;
     
     int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
@@ -362,7 +381,7 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
     for(int j=0;j<i;++j){
       cut_matind[j] = rmatindMochila[vec[j].second];
       cut_matval[j] = 1.0;
-      cerr << rmatindMochila[vec[j].second] << endl;
+      //cerr << rmatindMochila[vec[j].second] << endl;
     }
     CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
     tengoCover++;
