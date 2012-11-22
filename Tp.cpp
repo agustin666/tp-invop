@@ -16,9 +16,13 @@
 Agustin Brian Federico 
 
 #define COVERGREEDY
-#define COVERDP
+//#define COVERDP
 
-#define INSTANCIA "nuestraInstancia.lp"
+#define INSTANCIA "./miplib2010-benchmark/bab5.mps.gz"
+//#define INSTANCIA "./miplib2010-benchmark/neos-1337307.mps.gz"
+//#define INSTANCIA "./miplib2010-benchmark/neos-1396125.mps.gz"
+//#define INSTANCIA "./miplib2010-benchmark/reblock67.mps.gz"
+//#define INSTANCIA "./miplib2010-benchmark/ns1830653.mps.gz"
 #define JOYA if(status)errorHandler(status,env)
 #define ULTIMO(fila) (fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])
 
@@ -43,6 +47,7 @@ vector<int> lasMochila;
 double bMochila;
 int cantVar;
 int noZeroCountMochila;
+int totCortesGreedy=0;
 
 
 char errmsg[CPXMESSAGEBUFSIZE];
@@ -155,21 +160,39 @@ int main(int argc, char *argv[]){
   status = CPXgetrows(env, lp, &noZeroCountMochila, rmatbegMochila, rmatindMochila, rmatvalMochila, rmatspaceMochila, &surplus, 0, cantFilasMochila-1);
   if(surplus<0){cerr << "No teniamos espacio para traer las filas" << endl; errorHandler(status,env);}
   JOYA;
+
   
-  //Chequeamos todas las filas y indicamos cuales son mochila
+  //Chequeamos todas las filas y indicamos cuales son mochila. Excluimos cover y cambiamos signo
+  int covers=0;
+  int cantG=0;
   for(int i=0;i<cantFilasMochila;++i){
-    if(senseMochila[i]!='L') continue;
+    if(senseMochila[i]=='E') continue;
+    int sgn=1;
+    if(senseMochila[i]=='G') sgn=-1;
+    
     if(rhsMochila[i]<0)continue;
     if(fabs(rhsMochila[i]-floor(rhsMochila[i]))>10e-6)continue;
+    
     bool laMeto = true;
+    bool esCover= true;
     for(int j=rmatbegMochila[i];j<(i==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[i+1]);++j){
-      if(rmatvalMochila[j]<0)laMeto = false;
+      if(rmatvalMochila[j]*sgn<0)laMeto = false;
+      if(rmatvalMochila[j]!=sgn) esCover=false;
       if(fabs(rmatvalMochila[j]-floor(rmatvalMochila[j]))>10e-6)laMeto = false;
     }
-    if(laMeto)lasMochila.push_back(i);
+    if(!esCover && laMeto && sgn==-1){
+      cantG++;
+      rhsMochila[i]*=sgn;
+      for(int j=rmatbegMochila[i];j<(i==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[i+1]);++j) rmatvalMochila[j]*=sgn;
+    }
+    if(!esCover && laMeto)lasMochila.push_back(i);
+    if(esCover) covers++;
   }
   
-  cerr <<  endl << "Total de filas: " << cantFilasMochila << endl << "Total mochila: " << lasMochila.size() << endl << endl;
+  cerr <<  endl << "Total de filas: " << cantFilasMochila << endl ;
+  cerr << "Mochilas por mayor " << cantG << endl;
+  cerr << "Total mochila: " << lasMochila.size() << endl;
+  cerr << "Total covers: " << covers << endl;
   
   
   //~ for(int i=0;i<cantFilas;++i){
@@ -363,28 +386,89 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   
   //Ahora sumamos las a_j hasta pasarnos del bMochila+1
   int i;
+  
+  //Para extender la cover!
+  int maximoValor=0; 
+  
   for(i=0;i<(int)vec.size()&&acumA<bMochila+0.5;++i){
+    maximoValor=max(maximoValor,(int)rmatvalMochila[vec[i].second]);
     acumA += rmatvalMochila[vec[i].second];
     acumPesos += (1.-xestrella[rmatindMochila[vec[i].second]]);
   }
   
   //Preguntamos si los pesos suman menos que 1 (si es asi, hay un corte violado)
-  if(acumPesos < .99 && acumA>bMochila+0.5){
-    cerr << "Cover violado" << endl;
+  if(acumPesos < .98 && acumA>bMochila+0.5){
     double rhs = i-1.;
-    //cerr << "Dios mio alto corte: " << endl << endl;
-    //cerr << rhs << endl;
     int noZeroCount = i;
     
-    int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
-    double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
-    for(int j=0;j<i;++j){
-      cut_matind[j] = rmatindMochila[vec[j].second];
-      cut_matval[j] = 1.0;
-      //cerr << rmatindMochila[vec[j].second] << endl;
+    
+    //Vamos a extender la mochila con los que tienen A mayor o igual al maximo
+    int extendemos=0;
+    for(int j=rmatbegMochila[fila];j<ULTIMO(fila);j++){
+      if(rmatvalMochila[j]>=maximoValor) extendemos++;
     }
-    CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
+    
+    
+    int *cut_matind=(int*) calloc(noZeroCount+extendemos,sizeof(int));
+    double *cut_matval=(double*) calloc(noZeroCount+extendemos,sizeof(double));
+    
+    int ptr=0;
+    for(int j=0;j<i;++j){
+      cut_matind[ptr] = rmatindMochila[vec[j].second];
+      cut_matval[ptr++] = 1.0;
+    }
+    
+    // Las extendidas
+    for(int j=rmatbegMochila[fila];j<ULTIMO(fila);j++){
+      if(rmatvalMochila[j]>=maximoValor){
+        cut_matind[ptr]  = rmatindMochila[j];
+        cut_matval[ptr++]= 1.0; 
+      }
+    }
+    sort(cut_matind,cut_matind+ptr);
+    int distintas=unique(cut_matind,cut_matind+ptr)-cut_matind;
+    
+    cerr << "Cover violado. Lo extendimos por " << distintas-noZeroCount<<".Van "<<(++totCortesGreedy)<<" !"  << endl;
+    
+    CPXcutcallbackadd(env, cbdata, wherefrom, distintas, rhs, 'L', cut_matind, cut_matval, 0);
     tengoCover++;
   }
   return tengoCover;
 }
+
+/*
+
+  28335 18180  -116599.4537   486  -103157.5365  -119789.1446  1001733   16.12%
+Elapsed real time = 5025.96 sec. (tree size = 886.63 MB, solutions = 7)
+Nodefile size = 759.10 MB (435.38 MB after compression)
+  28541 18245  -117307.9430   541  -103157.5365  -119763.6160  1011636   16.10%
+
+
+
+
+
+
+
+    
+Elapsed real time = 945.76 sec. (tree size = 177.72 MB, solutions = 0)
+Nodefile size = 50.65 MB (30.58 MB after compression)
+   4343  3405   -98593.7680    86                -122137.0054   185937         
+   4572  3544  -116444.7307   474                -122065.4128   194610         
+Cover violado
+   4797  3678  -121166.6174   448                -121992.2699   204321         
+   4996  3814  -111350.2882   419                -121925.6843   213555         
+   5305  4117  -104746.6039    96                -121925.6843   220075         
+*  5477  4255      integral     0   -95024.2072  -121925.6843   222425   28.31%
+   5674  4360  -121856.2725   597   -95024.2072  -121847.2772   231677   28.23%
+   5872  4533  -107251.7208   286   -95024.2072  -121837.6007   241987   28.22%
+Cover violado
+
+
+
+
+
+
+
+
+
+*/
