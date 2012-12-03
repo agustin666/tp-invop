@@ -25,7 +25,7 @@ Agustin Brian Federico
 //#define INSTANCIA "./miplib2010-benchmark/ns1830653.mps.gz"
 #define INSTANCIA "reblock67.mps.gz"
 #define JOYA if(status)errorHandler(status,env)
-#define ULTIMO(fila) (fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])
+#define ULTIMO(fila) (fila==cantFilas-1?noZeroCountMochila:rmatbegOriginal[fila+1])
 
 static int losCutCallbacks(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
@@ -37,13 +37,13 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdate, int wherefrom);
 
 
 double* xestrella;
-double* aMochila;
-double* rhsMochila;
-int* rmatbegMochila;
-int cantFilasMochila;
-double* rmatvalMochila;
-char* senseMochila;
-int* rmatindMochila;
+double* aOriginal;
+double* rhsOriginal;
+int* rmatbegOriginal;
+int cantFilas;
+double* rmatvalOriginal;
+char* senseOriginal;
+int* rmatindOriginal;
 vector<int> lasMochila;
 double bMochila;
 int cantVar;
@@ -154,22 +154,23 @@ int main(int argc, char *argv[]){
   //Lectura de instancia
   CPXreadcopyprob(env,lp,archivo.c_str(), NULL);
 
+  // Copiamos el LP a memoria global
   cantVar = CPXgetnumcols(env,lp);
   xestrella = (double*)malloc(sizeof(double)*cantVar);
-  aMochila = (double*)malloc(sizeof(double)*cantVar);
-  cantFilasMochila = CPXgetnumrows(env,lp);
+  aOriginal = (double*)malloc(sizeof(double)*cantVar);
+  cantFilas = CPXgetnumrows(env,lp);
   int surplus;
-  int rmatspaceMochila = min( cantVar*cantFilasMochila , 1000000);
-  rhsMochila = (double*)malloc(sizeof(double)*cantFilasMochila);
-  rmatbegMochila = (int*)malloc(sizeof(int)*cantFilasMochila);
-  rmatindMochila = (int*)malloc(sizeof(int)*rmatspaceMochila);
-  rmatvalMochila = (double*)malloc(sizeof(double)*rmatspaceMochila);
-  senseMochila = (char*)  malloc(sizeof(char)*cantFilasMochila);
-  status = CPXgetsense(env, lp, senseMochila, 0, cantFilasMochila-1);
+  int rmatspaceOriginal = min( cantVar*cantFilas , 1000000);
+  rhsOriginal = (double*)malloc(sizeof(double)*cantFilas);
+  rmatbegOriginal = (int*)malloc(sizeof(int)*cantFilas);
+  rmatindOriginal = (int*)malloc(sizeof(int)*rmatspaceOriginal);
+  rmatvalOriginal = (double*)malloc(sizeof(double)*rmatspaceOriginal);
+  senseOriginal = (char*)  malloc(sizeof(char)*cantFilas);
+  status = CPXgetsense(env, lp, senseOriginal, 0, cantFilas-1);
   JOYA;
-  status = CPXgetrhs(env, lp, rhsMochila, 0, cantFilasMochila-1);
+  status = CPXgetrhs(env, lp, rhsOriginal, 0, cantFilas-1);
   JOYA;
-  status = CPXgetrows(env, lp, &noZeroCountMochila, rmatbegMochila, rmatindMochila, rmatvalMochila, rmatspaceMochila, &surplus, 0, cantFilasMochila-1);
+  status = CPXgetrows(env, lp, &noZeroCountMochila, rmatbegOriginal, rmatindOriginal, rmatvalOriginal, rmatspaceOriginal, &surplus, 0, cantFilas-1);
   if(surplus<0){cerr << "No teniamos espacio para traer las filas" << endl; errorHandler(status,env);}
   JOYA;
 
@@ -178,14 +179,14 @@ int main(int argc, char *argv[]){
   int covers=0;
   int cantG=0;
   // Inicializamos el grafo
-  cerr << cantFilasMochila << endl;
+  cerr << cantFilas << endl;
   last=(int*)malloc(2*cantVar*sizeof(int));
   adj=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   next=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   lastSepClique=(int*)malloc(2*cantVar*sizeof(int));
   adjSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   nextSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
-  int cantFilasClique=cantFilasMochila;
+  int cantFilasClique=cantFilas;
   ejes=0;
   memset(last,-1,sizeof last);
   for(int i=0;i<cantVar;++i){
@@ -196,21 +197,21 @@ int main(int argc, char *argv[]){
 		  int probj=a&2;
 		  serompe=false;
 		  
-		  for(int k=0;!serompe && k<cantFilasMochila;++k){
-			  if(senseMochila[i]=='E') continue;
+		  for(int k=0;!serompe && k<cantFilas;++k){
+			  if(senseOriginal[i]=='E') continue;
 			  int cota=0;
 			  
-			  for(int l=rmatbegMochila[k];l<(k==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[k+1]);++l){
-				if(rmatindMochila[l]!=i && rmatindMochila[l]!=j){
-				  if(senseMochila[i]=='L' && rmatvalMochila[l]<0) cota+=rmatvalMochila[l];
-				  if(senseMochila[i]=='G' && rmatvalMochila[l]>0) cota+=rmatvalMochila[l];
+			  for(int l=rmatbegOriginal[k];l<(k==cantFilas-1?noZeroCountMochila:rmatbegOriginal[k+1]);++l){
+				if(rmatindOriginal[l]!=i && rmatindOriginal[l]!=j){
+				  if(senseOriginal[i]=='L' && rmatvalOriginal[l]<0) cota+=rmatvalOriginal[l];
+				  if(senseOriginal[i]=='G' && rmatvalOriginal[l]>0) cota+=rmatvalOriginal[l];
 				}else{
-					if(rmatindMochila[l]==i) cota+=probi*rmatvalMochila[l];
-					if(rmatindMochila[l]==j) cota+=probj*rmatvalMochila[l];
+					if(rmatindOriginal[l]==i) cota+=probi*rmatvalOriginal[l];
+					if(rmatindOriginal[l]==j) cota+=probj*rmatvalOriginal[l];
 				}
 			  }
-			  if(senseMochila[k]=='L' && cota>rhsMochila[k]) serompe=true;
-			  if(senseMochila[k]=='G' && cota<rhsMochila[k]) serompe=true;
+			  if(senseOriginal[k]=='L' && cota>rhsOriginal[k]) serompe=true;
+			  if(senseOriginal[k]=='G' && cota<rhsOriginal[k]) serompe=true;
 			  
 		  }
 		  
@@ -223,31 +224,31 @@ int main(int argc, char *argv[]){
   cerr <<cantVar <<' '<< ejes << endl; 
   exit(-1);
   //Chequeamos todas las filas y indicamos cuales son mochila
-  for(int i=0;i<cantFilasMochila;++i){
-    if(senseMochila[i]=='E') continue;
+  for(int i=0;i<cantFilas;++i){
+    if(senseOriginal[i]=='E') continue;
     int sgn=1;
-    if(senseMochila[i]=='G') sgn=-1;
+    if(senseOriginal[i]=='G') sgn=-1;
     
-    if(rhsMochila[i]<0)continue;
-    if(fabs(rhsMochila[i]-floor(rhsMochila[i]))>10e-6)continue;
+    if(rhsOriginal[i]<0)continue;
+    if(fabs(rhsOriginal[i]-floor(rhsOriginal[i]))>10e-6)continue;
     
     bool laMeto = true;
     bool esCover= true;
-    for(int j=rmatbegMochila[i];j<(i==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[i+1]);++j){
-      if(rmatvalMochila[j]*sgn<0)laMeto = false;
-      if(rmatvalMochila[j]!=sgn) esCover=false;
-      if(fabs(rmatvalMochila[j]-floor(rmatvalMochila[j]))>10e-6)laMeto = false;
+    for(int j=rmatbegOriginal[i];j<(i==cantFilas-1?noZeroCountMochila:rmatbegOriginal[i+1]);++j){
+      if(rmatvalOriginal[j]*sgn<0)laMeto = false;
+      if(rmatvalOriginal[j]!=sgn) esCover=false;
+      if(fabs(rmatvalOriginal[j]-floor(rmatvalOriginal[j]))>10e-6)laMeto = false;
     }
     if(!esCover && laMeto && sgn==-1){
       cantG++;
-      rhsMochila[i]*=sgn;
-      for(int j=rmatbegMochila[i];j<(i==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[i+1]);++j) rmatvalMochila[j]*=sgn;
+      rhsOriginal[i]*=sgn;
+      for(int j=rmatbegOriginal[i];j<(i==cantFilas-1?noZeroCountMochila:rmatbegOriginal[i+1]);++j) rmatvalOriginal[j]*=sgn;
     }
     if(!esCover && laMeto)lasMochila.push_back(i);
     if(esCover) covers++;
   }
   
-  cerr <<  endl << "Total de filas: " << cantFilasMochila << endl ;
+  cerr <<  endl << "Total de filas: " << cantFilas << endl ;
   cerr << "Mochilas por mayor " << cantG << endl;
   cerr << "Total mochila: " << lasMochila.size() << endl;
   cerr << "Total covers: " << covers << endl;
@@ -363,7 +364,7 @@ void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int
 
 int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
   int tengoCover = 0;
-  int bMochila = rhsMochila[fila] + 1;
+  int bMochila = rhsOriginal[fila] + 1;
   if(bMochila>2005){
     cerr << "Muy grande el b como para hacer dp " << bMochila << endl;
     return 0;
@@ -371,7 +372,7 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
   
   
   double dpMochila[2][bMochila+5];
-  int dpPrevMochila[ULTIMO(fila)-rmatbegMochila[fila]][bMochila+5];
+  int dpPrevMochila[ULTIMO(fila)-rmatbegOriginal[fila]][bMochila+5];
   memset(dpPrevMochila,-1,sizeof dpPrevMochila);
   int ant=1,act=0;
   
@@ -381,24 +382,24 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
   for(int j=1;j<=bMochila;++j){
     dpMochila[ant][j] = 1e100;
     
-    if(j<=rmatvalMochila[rmatbegMochila[fila]]){
-      dpMochila[act][j] = (1-xestrella[rmatindMochila[rmatbegMochila[fila]]]);
+    if(j<=rmatvalOriginal[rmatbegOriginal[fila]]){
+      dpMochila[act][j] = (1-xestrella[rmatindOriginal[rmatbegOriginal[fila]]]);
       dpPrevMochila[0][j] = 0;
     }else{
       dpMochila[act][j] = 1e100;
     }
   }
   
-  for(int i=rmatbegMochila[fila]+1;i<ULTIMO(fila);++i){
+  for(int i=rmatbegOriginal[fila]+1;i<ULTIMO(fila);++i){
     swap(act,ant);
     for(int j=0;j<=bMochila;++j) dpMochila[act][j]=dpMochila[ant][j];
     
     for(int j=0;j<=bMochila;++j){  // Recorro todos los valores que tenia
-      if( (1-xestrella[rmatindMochila[i]]) + dpMochila[ant][j] <= 
-           dpMochila[act][min(bMochila,j+((int)rmatvalMochila[i]))])
+      if( (1-xestrella[rmatindOriginal[i]]) + dpMochila[ant][j] <= 
+           dpMochila[act][min(bMochila,j+((int)rmatvalOriginal[i]))])
       {
-        dpMochila[act][min(bMochila,j+((int)rmatvalMochila[i]))] = (1-xestrella[rmatindMochila[i]]) + dpMochila[ant][j];
-        dpPrevMochila[i-rmatbegMochila[fila]][min(bMochila,j+((int)rmatvalMochila[i]))] = j;
+        dpMochila[act][min(bMochila,j+((int)rmatvalOriginal[i]))] = (1-xestrella[rmatindOriginal[i]]) + dpMochila[ant][j];
+        dpPrevMochila[i-rmatbegOriginal[fila]][min(bMochila,j+((int)rmatvalOriginal[i]))] = j;
       }
     }
   
@@ -408,14 +409,14 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
   
   if(dpMochila[act][bMochila] < 0.99){
     cerr << "Cover violado por DP" << endl;
-    //for(int i=0;i<ULTIMO(fila)-rmatbegMochila[fila];cerr<<endl,i++){
+    //for(int i=0;i<ULTIMO(fila)-rmatbegOriginal[fila];cerr<<endl,i++){
       //for(int j=0;j<=bMochila;j++) cerr << dpPrevMochila[i][j] << ' ' ;
     //}
     
     //Hay que recuperar la solucion y ahi generar el corte
     vector<int> usados;
     int columna=bMochila;
-    int pfila=ULTIMO(fila)-rmatbegMochila[fila]-1;
+    int pfila=ULTIMO(fila)-rmatbegOriginal[fila]-1;
     while(pfila>=0){
       if(dpPrevMochila[pfila][columna]==-1) pfila--;
       else{
@@ -432,7 +433,7 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
     int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
     double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
     for(int j=0;j<(int)usados.size();++j){
-      cut_matind[j] = rmatindMochila[usados[j]+rmatbegMochila[fila]];
+      cut_matind[j] = rmatindOriginal[usados[j]+rmatbegOriginal[fila]];
       cut_matval[j] = 1.0;
     }
     CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
@@ -444,15 +445,15 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
 
 int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   int tengoCover = 0;  
-  bMochila = rhsMochila[fila];
+  bMochila = rhsOriginal[fila];
   
   
   //Greedy 1 (A_j/(1-x_j)
   vector<pair<double, int> > vec;
-  for(int i=rmatbegMochila[fila];i<ULTIMO(fila);++i){
-    vec.push_back(pair<double,int>(rmatvalMochila[i]/(1-xestrella[rmatindMochila[i]]),i));
-    //cerr << "Toda la info: " << "el i " << i << endl << "el valor: " << (rmatvalMochila[i]/(1-xestrella[rmatindMochila[i]])) << endl;
-    //cerr << "rmatvalMochila: " << rmatvalMochila[i] << " lo otro " << 1-xestrella[rmatindMochila[i]] << endl;
+  for(int i=rmatbegOriginal[fila];i<ULTIMO(fila);++i){
+    vec.push_back(pair<double,int>(rmatvalOriginal[i]/(1-xestrella[rmatindOriginal[i]]),i));
+    //cerr << "Toda la info: " << "el i " << i << endl << "el valor: " << (rmatvalOriginal[i]/(1-xestrella[rmatindOriginal[i]])) << endl;
+    //cerr << "rmatvalOriginal: " << rmatvalOriginal[i] << " lo otro " << 1-xestrella[rmatindOriginal[i]] << endl;
   }
   sort(vec.begin(),vec.end(), greater<pair<double,int> >());
   
@@ -465,9 +466,9 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   int maximoValor=0; 
   
   for(i=0;i<(int)vec.size()&&acumA<bMochila+0.5;++i){
-    maximoValor=max(maximoValor,(int)rmatvalMochila[vec[i].second]);
-    acumA += rmatvalMochila[vec[i].second];
-    acumPesos += (1.-xestrella[rmatindMochila[vec[i].second]]);
+    maximoValor=max(maximoValor,(int)rmatvalOriginal[vec[i].second]);
+    acumA += rmatvalOriginal[vec[i].second];
+    acumPesos += (1.-xestrella[rmatindOriginal[vec[i].second]]);
   }
   
   //Preguntamos si los pesos suman menos que 1 (si es asi, hay un corte violado)
@@ -478,8 +479,8 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
     
     //Vamos a extender la mochila con los que tienen A mayor o igual al maximo
     int extendemos=0;
-    for(int j=rmatbegMochila[fila];j<ULTIMO(fila);j++){
-      if(rmatvalMochila[j]>=maximoValor) extendemos++;
+    for(int j=rmatbegOriginal[fila];j<ULTIMO(fila);j++){
+      if(rmatvalOriginal[j]>=maximoValor) extendemos++;
     }
     
     
@@ -488,14 +489,14 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
     
     int ptr=0;
     for(int j=0;j<i;++j){
-      cut_matind[ptr] = rmatindMochila[vec[j].second];
+      cut_matind[ptr] = rmatindOriginal[vec[j].second];
       cut_matval[ptr++] = 1.0;
     }
     
     // Las extendidas
-    for(int j=rmatbegMochila[fila];j<ULTIMO(fila);j++){
-      if(rmatvalMochila[j]>=maximoValor){
-        cut_matind[ptr]  = rmatindMochila[j];
+    for(int j=rmatbegOriginal[fila];j<ULTIMO(fila);j++){
+      if(rmatvalOriginal[j]>=maximoValor){
+        cut_matind[ptr]  = rmatindOriginal[j];
         cut_matval[ptr++]= 1.0; 
       }
     }
