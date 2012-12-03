@@ -18,11 +18,12 @@ Agustin Brian Federico
 #define COVERGREEDY
 //#define COVERDP
 
-#define INSTANCIA "./miplib2010-benchmark/bab5.mps.gz"
+//#define INSTANCIA "./miplib2010-benchmark/bab5.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/neos-1337307.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/neos-1396125.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/reblock67.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/ns1830653.mps.gz"
+#define INSTANCIA "reblock67.mps.gz"
 #define JOYA if(status)errorHandler(status,env)
 #define ULTIMO(fila) (fila==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[fila+1])
 
@@ -55,6 +56,17 @@ void errorHandler(int status, CPXENVptr env){
     CPXgeterrorstring(env, status, errmsg);
     fprintf(stderr, "%s", errmsg);
     exit(-1);
+}
+
+int* last,*next,*adj;
+int ejes; 
+int* lastSepClique,*nextSepClique,*adjSepClique;
+int ejesSepClique; 
+
+void add_edge(int u,int v){
+    next[ejes]=last[u]; adj[ejes]=v; last[u]=ejes++;
+    swap(u,v);
+    next[ejes]=last[u]; adj[ejes]=v; last[u]=ejes++;
 }
 
 int main(int argc, char *argv[]){
@@ -165,6 +177,52 @@ int main(int argc, char *argv[]){
   //Chequeamos todas las filas y indicamos cuales son mochila. Excluimos cover y cambiamos signo
   int covers=0;
   int cantG=0;
+  // Inicializamos el grafo
+  cerr << cantFilasMochila << endl;
+  last=(int*)malloc(2*cantVar*sizeof(int));
+  adj=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  next=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  lastSepClique=(int*)malloc(2*cantVar*sizeof(int));
+  adjSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  nextSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  int cantFilasClique=cantFilasMochila;
+  ejes=0;
+  memset(last,-1,sizeof last);
+  for(int i=0;i<cantVar;++i){
+      for(int j=i+1;j<cantVar;++j){
+		bool serompe;
+		for(int a=0;a<4;++a){
+		  int probi=a&1;
+		  int probj=a&2;
+		  serompe=false;
+		  
+		  for(int k=0;!serompe && k<cantFilasMochila;++k){
+			  if(senseMochila[i]=='E') continue;
+			  int cota=0;
+			  
+			  for(int l=rmatbegMochila[k];l<(k==cantFilasMochila-1?noZeroCountMochila:rmatbegMochila[k+1]);++l){
+				if(rmatindMochila[l]!=i && rmatindMochila[l]!=j){
+				  if(senseMochila[i]=='L' && rmatvalMochila[l]<0) cota+=rmatvalMochila[l];
+				  if(senseMochila[i]=='G' && rmatvalMochila[l]>0) cota+=rmatvalMochila[l];
+				}else{
+					if(rmatindMochila[l]==i) cota+=probi*rmatvalMochila[l];
+					if(rmatindMochila[l]==j) cota+=probj*rmatvalMochila[l];
+				}
+			  }
+			  if(senseMochila[k]=='L' && cota>rhsMochila[k]) serompe=true;
+			  if(senseMochila[k]=='G' && cota<rhsMochila[k]) serompe=true;
+			  
+		  }
+		  
+		  if(serompe){
+			  add_edge(i*2+1-probi,j*2+1-probj);
+		  }
+		}   
+      }
+  }
+  cerr <<cantVar <<' '<< ejes << endl; 
+  exit(-1);
+  //Chequeamos todas las filas y indicamos cuales son mochila
   for(int i=0;i<cantFilasMochila;++i){
     if(senseMochila[i]=='E') continue;
     int sgn=1;
@@ -233,21 +291,21 @@ int main(int argc, char *argv[]){
 
 ///////////////////////////////////////
 static int losCutCallbacks (CPXCENVptr env, void *cbdata, int wherefrom, void *cbhandle, int *useraction_p){
-  
-  theCovernCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
-  //~ theGreatGomoryCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
-  //~ ohMyCliqueCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
-  return 0;
+	int status;
+	//Traemos la solucion de la relajacion
+	status = CPXgetcallbacknodex(env,cbdata,wherefrom,xestrella,0,cantVar-1);
+	if(status){cerr << "no pude traer x actual" << endl;exit(-1);}
+	theCovernCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
+	//~ theGreatGomoryCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
+	ohMyCliqueCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
+	return 0;
 } 
 
 void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
   *useraction_p = CPX_CALLBACK_DEFAULT;
-  
   int status;
   
-  //Traemos la solucion de la relajacion
-  status = CPXgetcallbacknodex(env,cbdata,wherefrom,xestrella,0,cantVar-1);
-  if(status){cerr << "no pude traer x actual" << endl;exit(-1);}
+  
   
   //Variable para ver que heuristica o exacto corremos
   int tengoCover = 0;
@@ -272,18 +330,34 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
 void theGreatGomoryCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
   *useraction_p = CPX_CALLBACK_DEFAULT;
   cerr << "a little something to make me gomory" << endl;
-
-
   return;
 }
 
 
 void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
-  *useraction_p = CPX_CALLBACK_DEFAULT;
-  cerr << "oh baby refrain, cuz you are breaking my clique" << endl;
+	*useraction_p = CPX_CALLBACK_DEFAULT;
+	cerr << "oh baby refrain, cuz you are breaking my clique" << endl;
   
-
-  return;
+  	vector< pair<double, int> > xestrellaOrdenado;
+	//Armamos subgrafo inducido por xestrella
+	memset(lastSepClique, -1 , sizeof lastSepClique);
+	int ejesActual = 0;
+	for(int i=0;i<cantVar;++i){
+		if(xestrella[i]<=0.01)continue;
+		int ejeActual = last[i];
+		while(ejeActual != -1){
+			if(xestrella[adj[ejeActual]]>0.01){
+				nextSepClique[ejesActual]=lastSepClique[i]; adjSepClique[ejes]=adj[ejeActual]; lastSepClique[i]=ejesActual++;
+			}
+			ejeActual = next[ejeActual];
+		}
+		xestrellaOrdenado.push_back(pair<double,int>(xestrella[i],i));
+	}
+	sort(xestrellaOrdenado.begin(),xestrellaOrdenado.end());
+	
+	//heuristica de busqueda clique
+	
+	return;
 }
 
 
