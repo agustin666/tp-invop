@@ -23,9 +23,10 @@ Agustin Brian Federico
 //#define INSTANCIA "./miplib2010-benchmark/neos-1396125.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/reblock67.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/ns1830653.mps.gz"
-#define INSTANCIA "reblock67.mps.gz"
+#define INSTANCIA "miplib3/egout.mps"
 #define JOYA if(status)errorHandler(status,env)
 #define ULTIMO(fila) (fila==cantFilas-1?noZeroCountMochila:rmatbegOriginal[fila+1])
+
 
 static int losCutCallbacks(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
@@ -158,6 +159,7 @@ int main(int argc, char *argv[]){
   cantVar = CPXgetnumcols(env,lp);
   xestrella = (double*)malloc(sizeof(double)*cantVar);
   aOriginal = (double*)malloc(sizeof(double)*cantVar);
+
   cantFilas = CPXgetnumrows(env,lp);
   int surplus;
   int rmatspaceOriginal = min( cantVar*cantFilas , 1000000);
@@ -175,9 +177,6 @@ int main(int argc, char *argv[]){
   JOYA;
 
   
-  //Chequeamos todas las filas y indicamos cuales son mochila. Excluimos cover y cambiamos signo
-  int covers=0;
-  int cantG=0;
   // Inicializamos el grafo
   cerr << cantFilas << endl;
   last=(int*)malloc(2*cantVar*sizeof(int));
@@ -188,20 +187,23 @@ int main(int argc, char *argv[]){
   nextSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   int cantFilasClique=cantFilas;
   ejes=0;
-  memset(last,-1,sizeof last);
+  memset(last,-1,2*cantVar*sizeof(int));
   for(int i=0;i<cantVar;++i){
       for(int j=i+1;j<cantVar;++j){
 		bool serompe;
 		for(int a=0;a<4;++a){
 		  int probi=a&1;
-		  int probj=a&2;
+		  int probj=(a&2)?1:0;
 		  serompe=false;
 		  
+		  
+		  //cantFilas
 		  for(int k=0;!serompe && k<cantFilas;++k){
 			  if(senseOriginal[i]=='E') continue;
 			  int cota=0;
 			  
 			  for(int l=rmatbegOriginal[k];l<(k==cantFilas-1?noZeroCountMochila:rmatbegOriginal[k+1]);++l){
+
 				if(rmatindOriginal[l]!=i && rmatindOriginal[l]!=j){
 				  if(senseOriginal[i]=='L' && rmatvalOriginal[l]<0) cota+=rmatvalOriginal[l];
 				  if(senseOriginal[i]=='G' && rmatvalOriginal[l]>0) cota+=rmatvalOriginal[l];
@@ -221,9 +223,15 @@ int main(int argc, char *argv[]){
 		}   
       }
   }
-  cerr <<cantVar <<' '<< ejes << endl; 
-  exit(-1);
-  //Chequeamos todas las filas y indicamos cuales son mochila
+
+
+  cerr << "EL NEXT DE CERO ES " << next[0] << endl;
+  cerr <<"Ejes en el grafo de conflicto "<< ejes << endl; 
+  //~ exit(-1);
+  
+  //Chequeamos todas las filas y indicamos cuales son mochila. Excluimos cover y cambiamos signo
+  int covers=0;
+  int cantG=0;
   for(int i=0;i<cantFilas;++i){
     if(senseOriginal[i]=='E') continue;
     int sgn=1;
@@ -246,19 +254,17 @@ int main(int argc, char *argv[]){
     }
     if(!esCover && laMeto)lasMochila.push_back(i);
     if(esCover) covers++;
-  }
+   }
   
   cerr <<  endl << "Total de filas: " << cantFilas << endl ;
   cerr << "Mochilas por mayor " << cantG << endl;
   cerr << "Total mochila: " << lasMochila.size() << endl;
   cerr << "Total covers: " << covers << endl;
-  
-  
+   
+
   //~ for(int i=0;i<cantFilas;++i){
     //~ cerr << rhs[i] << endl;
   //~ }
-  
-  
 
   
   ////////////////////////////////////////////////////////////////////
@@ -306,8 +312,6 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
   *useraction_p = CPX_CALLBACK_DEFAULT;
   int status;
   
-  
-  
   //Variable para ver que heuristica o exacto corremos
   int tengoCover = 0;
   
@@ -334,29 +338,108 @@ void theGreatGomoryCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle
   return;
 }
 
+#define COTACLIQUE 20
+int szclique;
+int miclique[1010];
+int cantcliques;
+
+#define DBG
+
+void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double acum,void *cbdata,int wherefrom,CPXCENVptr env){
+	int entro=false; szclique++;
+	
+	#ifdef DBG
+		cerr << nodo << ' ' << acum << endl;
+	#endif 
+	
+	miclique[szclique-1]=nodo;
+	
+	for(int i=pos+1;i<xestrella.size() && cantcliques<COTACLIQUE;++i){
+		bool puedo=true;
+		
+		
+		for(int v=xestrella[i].second*2;v<=xestrella[i].second*2+1;v++){
+
+			
+			for(int j=0;j<szclique;++j){
+				bool hayeje = false;
+				for(int k=last[v];~k && !hayeje;k=next[k]){
+					if(adj[k]==miclique[j]) hayeje=true;
+				}
+				if(!hayeje) puedo=false;
+			}
+			if(puedo){
+				entro=true;
+				genclique(v,i,xestrella, acum+(v&1?0:xestrella[i].first),cbdata,wherefrom,env);
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	if(!entro && cantcliques!=COTACLIQUE){ // es maximal
+		cantcliques++;
+		
+		if(acum>1.05){
+			cerr<<"Metimos clique cut "<< acum << endl;
+			
+			double rhs = 1.;
+			
+			int noZeroCount = szclique;
+			
+			int *cut_matind=(int*) calloc(noZeroCount,sizeof(int));
+			double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
+			
+			for(int j=0;j<szclique;++j){
+			  cut_matind[j] = miclique[j]/2;
+			  cut_matval[j] = 1.0;
+			  if(miclique[j]&1) {  // Es el complemento
+				  rhs-=1.;
+				  cut_matval[j] = -1.0;
+			  }
+			}
+			
+			CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
+			
+		}
+		if(cantcliques==COTACLIQUE) return;
+	}
+	
+	szclique--;
+}
 
 void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
 	*useraction_p = CPX_CALLBACK_DEFAULT;
-	cerr << "oh baby refrain, cuz you are breaking my clique" << endl;
+	//~ cerr << "oh baby refrain, cuz you are breaking my clique" << endl;
   
   	vector< pair<double, int> > xestrellaOrdenado;
 	//Armamos subgrafo inducido por xestrella
-	memset(lastSepClique, -1 , sizeof lastSepClique);
-	int ejesActual = 0;
+	//~ memset(lastSepClique, -1 , sizeof lastSepClique);
+	//~ int ejesActual = 0;
 	for(int i=0;i<cantVar;++i){
 		if(xestrella[i]<=0.01)continue;
-		int ejeActual = last[i];
-		while(ejeActual != -1){
-			if(xestrella[adj[ejeActual]]>0.01){
-				nextSepClique[ejesActual]=lastSepClique[i]; adjSepClique[ejes]=adj[ejeActual]; lastSepClique[i]=ejesActual++;
-			}
-			ejeActual = next[ejeActual];
-		}
+		//~ int ejeActual = last[i];
+		//~ while(ejeActual != -1){
+			//~ if(xestrella[adj[ejeActual]]>0.01){
+				//~ nextSepClique[ejesActual]=lastSepClique[i]; adjSepClique[ejesActual]=adj[ejeActual]; lastSepClique[i]=ejesActual++;
+			//~ }
+			//~ ejeActual = next[ejeActual];
+		//~ }
 		xestrellaOrdenado.push_back(pair<double,int>(xestrella[i],i));
 	}
-	sort(xestrellaOrdenado.begin(),xestrellaOrdenado.end());
 	
-	//heuristica de busqueda clique
+	
+	
+	sort(xestrellaOrdenado.begin(),xestrellaOrdenado.end());
+	cantcliques=0;
+	szclique=0;
+	cerr << "Armo subgrafo " << endl;
+	
+	for(int i=0;i<cantVar;++i){
+		genclique(xestrellaOrdenado[i].second*2,i,xestrellaOrdenado,xestrellaOrdenado[i].first,cbdata,wherefrom,env);
+	}
 	
 	return;
 }
