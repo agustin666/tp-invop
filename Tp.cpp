@@ -15,50 +15,51 @@
 
 Agustin Brian Federico 
 
-#define COVERGREEDY
+//#define COVERGREEDY
 //#define COVERDP
+//#define CORTECLIQUE
+//
+// miplib3 instancias (#columnas,nombre)
+//[(33, 'p0033'), (45, 'stein45'), (89, 'lseu'), (100, 'enigma'), (201, 'p0201'), (282, 'p0282'), (319, 'mod008'), (548, 'p0548'), (1372, 'seymour'), (1989, 'l152lav'), (2655, 'mod010'), (2756, 'p2756'), (2993, 'harp2'), (6000, 'cap6000'), (7195, 'air05'), (8904, 'air04'), (10724, 'mitre'), (10757, 'air03'), (63009, 'fast0507'), (87482, 'nw04')]
+//sorted([(int(w[2]),w[0]) for w in filter(lambda z: len(z)>5 and int(z[5])==0 and z[4]=='ALL',map(lambda x: x.split(),s.split('\n')[1:]))])
+
 
 //#define INSTANCIA "./miplib2010-benchmark/bab5.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/neos-1337307.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/neos-1396125.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/reblock67.mps.gz"
 //#define INSTANCIA "./miplib2010-benchmark/ns1830653.mps.gz"
-#define INSTANCIA "miplib3/egout.mps"
-#define JOYA if(status)errorHandler(status,env)
+#define INSTANCIA "miplib3/harp2.mps"
 #define ULTIMO(fila) (fila==cantFilas-1?noZeroCountMochila:rmatbegOriginal[fila+1])
+#define JOYA if(status){CPXgeterrorstring(env, status, errmsg);fprintf(stderr, "%s", errmsg);exit(-1);}
+char errmsg[CPXMESSAGEBUFSIZE];
 
 
 static int losCutCallbacks(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
-void theGreatGomoryCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p);
 int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom);
 int dpForCovern(int fila, CPXCENVptr env, void *cbdate, int wherefrom);
 
 
-
+//Vamos a guardarnos todo el LP original en memoria
+int cantVar;
+int cantFilas;
 double* xestrella;
 double* aOriginal;
 double* rhsOriginal;
 int* rmatbegOriginal;
-int cantFilas;
 double* rmatvalOriginal;
 char* senseOriginal;
 int* rmatindOriginal;
+int noZeroCountMochila;
+
+//En un vector nos guardamos el indice de las restricciones que son mochila, y no son cover
 vector<int> lasMochila;
 double bMochila;
-int cantVar;
-int noZeroCountMochila;
 int totCortesGreedy=0;
 
-
-char errmsg[CPXMESSAGEBUFSIZE];
-void errorHandler(int status, CPXENVptr env){
-    CPXgeterrorstring(env, status, errmsg);
-    fprintf(stderr, "%s", errmsg);
-    exit(-1);
-}
-
+//Estructura de grafo
 int* last,*next,*adj;
 int ejes; 
 int* lastSepClique,*nextSepClique,*adjSepClique;
@@ -90,15 +91,13 @@ int main(int argc, char *argv[]){
   env = CPXopenCPLEX(&status);
   
   if(env == NULL){
-    fprintf(stderr, "No se pudo inicializar el ambiente.\n");
-    errorHandler(status,env);
+    fprintf(stderr, "No se pudo inicializar el ambiente.\n");JOYA;
   }
   
   lp = CPXcreateprob(env, &status, "Test");
   
   if(lp==NULL){
-    fprintf(stderr, "No se pudo crear el problema\n", status);
-    errorHandler(status,env);
+    fprintf(stderr, "No se pudo crear el problema\n", status);JOYA;
   }
   
   ///////////////////////////////////////////////////////////////////////////////////
@@ -106,14 +105,12 @@ int main(int argc, char *argv[]){
   //
   status = CPXsetintparam(env, CPX_PARAM_SCRIND, CPX_ON);
   if(status){
-    fprintf(stderr,"Fallo el indicador por pantalla\n", status);
-    errorHandler(status,env);
+    fprintf(stderr,"Fallo el indicador por pantalla\n", status);JOYA;
   }
   
   status = CPXsetintparam(env, CPX_PARAM_DATACHECK, CPX_ON);
   if(status){
-    fprintf(stderr,"No se pudo habilitar data checking\n", status);
-    errorHandler(status,env);
+    fprintf(stderr,"No se pudo habilitar data checking\n", status);JOYA;
   }
   
   //Con este parametro en off, siempre no estamos refiriendo al problema original
@@ -173,59 +170,60 @@ int main(int argc, char *argv[]){
   status = CPXgetrhs(env, lp, rhsOriginal, 0, cantFilas-1);
   JOYA;
   status = CPXgetrows(env, lp, &noZeroCountMochila, rmatbegOriginal, rmatindOriginal, rmatvalOriginal, rmatspaceOriginal, &surplus, 0, cantFilas-1);
-  if(surplus<0){cerr << "No teniamos espacio para traer las filas" << endl; errorHandler(status,env);}
+  if(surplus<0){cerr << "No teniamos espacio para traer las filas" << endl;}
   JOYA;
 
   
   // Inicializamos el grafo
-  cerr << cantFilas << endl;
   last=(int*)malloc(2*cantVar*sizeof(int));
   adj=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   next=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
-  lastSepClique=(int*)malloc(2*cantVar*sizeof(int));
-  adjSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
-  nextSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  //lastSepClique=(int*)malloc(2*cantVar*sizeof(int));
+  //adjSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
+  //nextSepClique=(int*)malloc(min(1000000,4*cantVar*cantVar)*sizeof(int));
   int cantFilasClique=cantFilas;
   ejes=0;
   memset(last,-1,2*cantVar*sizeof(int));
+  
+  #ifdef CORTECLIQUE
+  
   for(int i=0;i<cantVar;++i){
-      for(int j=i+1;j<cantVar;++j){
-		bool serompe;
-		for(int a=0;a<4;++a){
-		  int probi=a&1;
-		  int probj=(a&2)?1:0;
-		  serompe=false;
-		  
-		  
-		  //cantFilas
-		  for(int k=0;!serompe && k<cantFilas;++k){
-			  if(senseOriginal[i]=='E') continue;
-			  int cota=0;
-			  
-			  for(int l=rmatbegOriginal[k];l<(k==cantFilas-1?noZeroCountMochila:rmatbegOriginal[k+1]);++l){
-
-				if(rmatindOriginal[l]!=i && rmatindOriginal[l]!=j){
-				  if(senseOriginal[i]=='L' && rmatvalOriginal[l]<0) cota+=rmatvalOriginal[l];
-				  if(senseOriginal[i]=='G' && rmatvalOriginal[l]>0) cota+=rmatvalOriginal[l];
-				}else{
-					if(rmatindOriginal[l]==i) cota+=probi*rmatvalOriginal[l];
-					if(rmatindOriginal[l]==j) cota+=probj*rmatvalOriginal[l];
-				}
-			  }
-			  if(senseOriginal[k]=='L' && cota>rhsOriginal[k]) serompe=true;
-			  if(senseOriginal[k]=='G' && cota<rhsOriginal[k]) serompe=true;
-			  
-		  }
-		  
-		  if(serompe){
-			  add_edge(i*2+1-probi,j*2+1-probj);
-		  }
-		}   
-      }
+    add_edge(i*2,i*2+1);          // i y ~i son conflicto
+    for(int j=i+1;j<min(cantVar,10000/cantVar);++j){ 
+      bool serompe;
+      for(int a=0;a<4;++a){
+        int probi=a&1;      // si probx es 1 entonces uso la variable original si es 0 uso al complemento
+        int probj=(a&2)?1:0;
+        serompe=false;
+        
+        //cantFilas
+        for(int k=0;!serompe && k<cantFilas;++k){
+          if(senseOriginal[i]=='E') continue;
+          double cota=0;
+          
+          for(int l=rmatbegOriginal[k];l<(k==cantFilas-1?noZeroCountMochila:rmatbegOriginal[k+1]);++l){
+            if(rmatindOriginal[l]!=i && rmatindOriginal[l]!=j){
+              if(senseOriginal[k]=='L' && rmatvalOriginal[l]<0) cota+=rmatvalOriginal[l];
+              if(senseOriginal[k]=='G' && rmatvalOriginal[l]>0) cota+=rmatvalOriginal[l];
+            }else{
+              if(rmatindOriginal[l]==i) cota+=probi*rmatvalOriginal[l]; // Si probi es 1, uso la variable, sino, no la uso
+              if(rmatindOriginal[l]==j) cota+=probj*rmatvalOriginal[l];
+            }
+          }
+          if(senseOriginal[k]=='L' && cota>rhsOriginal[k]+0.001) serompe=true;
+          if(senseOriginal[k]=='G' && cota<rhsOriginal[k]-0.001) serompe=true;
+          
+        }
+        
+        if(serompe){          
+          add_edge(i*2+1-probi,j*2+1-probj);
+        }
+      }   
+    }
   }
+  
+  #endif
 
-
-  cerr << "EL NEXT DE CERO ES " << next[0] << endl;
   cerr <<"Ejes en el grafo de conflicto "<< ejes << endl; 
   //~ exit(-1);
   
@@ -301,10 +299,16 @@ static int losCutCallbacks (CPXCENVptr env, void *cbdata, int wherefrom, void *c
 	int status;
 	//Traemos la solucion de la relajacion
 	status = CPXgetcallbacknodex(env,cbdata,wherefrom,xestrella,0,cantVar-1);
-	if(status){cerr << "no pude traer x actual" << endl;exit(-1);}
+  JOYA;
+  
+  #if defined COVERDP || defined COVERGREEDY
 	theCovernCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
-	//~ theGreatGomoryCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
-	ohMyCliqueCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
+  #endif
+  
+  #ifdef CORTECLIQUE
+    ohMyCliqueCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
+  #endif
+  
 	return 0;
 } 
 
@@ -316,7 +320,7 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
   int tengoCover = 0;
   
   #ifdef COVERGREEDY
-    for(int i=0;i<(int)lasMochila.size();++i){
+    for(int i=0;i<(int)lasMochila.size()&&tengoCover==0;i++){
       tengoCover += greedyForCovern(lasMochila[i], env, cbdata, wherefrom);
     }
   #endif
@@ -332,34 +336,20 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
 }
 
 
-void theGreatGomoryCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
-  *useraction_p = CPX_CALLBACK_DEFAULT;
-  cerr << "a little something to make me gomory" << endl;
-  return;
-}
-
-#define COTACLIQUE 20
+#define COTACLIQUE 500
 int szclique;
 int miclique[1010];
 int cantcliques;
 
-#define DBG
-
 void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double acum,void *cbdata,int wherefrom,CPXCENVptr env){
 	int entro=false; szclique++;
-	
-	#ifdef DBG
-		cerr << nodo << ' ' << acum << endl;
-	#endif 
 	
 	miclique[szclique-1]=nodo;
 	
 	for(int i=pos+1;i<xestrella.size() && cantcliques<COTACLIQUE;++i){
 		bool puedo=true;
 		
-		
 		for(int v=xestrella[i].second*2;v<=xestrella[i].second*2+1;v++){
-
 			
 			for(int j=0;j<szclique;++j){
 				bool hayeje = false;
@@ -376,14 +366,13 @@ void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double a
 		
 	}
 	
+	//Si no pudo extender clique era maximal
 	
-	
-	
-	if(!entro && cantcliques!=COTACLIQUE){ // es maximal
+	if(!entro && cantcliques!=COTACLIQUE){ 
 		cantcliques++;
 		
-		if(acum>1.05){
-			cerr<<"Metimos clique cut "<< acum << endl;
+		if(acum>=1.001){
+			cerr<<"Metimos clique cut "<< acum <<' ' << szclique<< endl;
 			
 			double rhs = 1.;
 			
@@ -393,6 +382,7 @@ void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double a
 			double *cut_matval=(double*) calloc(noZeroCount,sizeof(double));
 			
 			for(int j=0;j<szclique;++j){
+        cerr << miclique[j]<<'/'<<miclique[j]/2<<' '<<xestrella[miclique[j]/2].first <<"  ";
 			  cut_matind[j] = miclique[j]/2;
 			  cut_matval[j] = 1.0;
 			  if(miclique[j]&1) {  // Es el complemento
@@ -400,6 +390,7 @@ void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double a
 				  cut_matval[j] = -1.0;
 			  }
 			}
+      cerr << endl;
 			
 			CPXcutcallbackadd(env, cbdata, wherefrom, noZeroCount, rhs, 'L', cut_matind, cut_matval, 0);
 			
@@ -412,9 +403,8 @@ void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double a
 
 void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int *useraction_p){
 	*useraction_p = CPX_CALLBACK_DEFAULT;
-	//~ cerr << "oh baby refrain, cuz you are breaking my clique" << endl;
   
-  	vector< pair<double, int> > xestrellaOrdenado;
+  vector< pair<double, int> > xestrellaOrdenado;
 	//Armamos subgrafo inducido por xestrella
 	//~ memset(lastSepClique, -1 , sizeof lastSepClique);
 	//~ int ejesActual = 0;
@@ -431,13 +421,10 @@ void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int
 	}
 	
 	
-	
 	sort(xestrellaOrdenado.begin(),xestrellaOrdenado.end());
 	cantcliques=0;
-	szclique=0;
-	cerr << "Armo subgrafo " << endl;
-	
-	for(int i=0;i<cantVar;++i){
+	szclique=0;	
+	for(int i=0;i<xestrellaOrdenado.size();++i){
 		genclique(xestrellaOrdenado[i].second*2,i,xestrellaOrdenado,xestrellaOrdenado[i].first,cbdata,wherefrom,env);
 	}
 	
@@ -526,19 +513,24 @@ int dpForCovern(int fila, CPXCENVptr env, void *cbdata, int wherefrom){
   return tengoCover;
 }
 
+
+#define COTATAM 1500
+pair<double,int> vec[COTATAM];
 int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   int tengoCover = 0;  
   bMochila = rhsOriginal[fila];
   
   
   //Greedy 1 (A_j/(1-x_j)
-  vector<pair<double, int> > vec;
+  //vector<pair<double, int> > vec;
+  int len=0;
+  
   for(int i=rmatbegOriginal[fila];i<ULTIMO(fila);++i){
-    vec.push_back(pair<double,int>(rmatvalOriginal[i]/(1-xestrella[rmatindOriginal[i]]),i));
+    vec[len++]=pair<double,int>(rmatvalOriginal[i]/(1-xestrella[rmatindOriginal[i]]),i);
     //cerr << "Toda la info: " << "el i " << i << endl << "el valor: " << (rmatvalOriginal[i]/(1-xestrella[rmatindOriginal[i]])) << endl;
     //cerr << "rmatvalOriginal: " << rmatvalOriginal[i] << " lo otro " << 1-xestrella[rmatindOriginal[i]] << endl;
   }
-  sort(vec.begin(),vec.end(), greater<pair<double,int> >());
+  sort(vec,vec+len, greater<pair<double,int> >());
   
   double acumA=0.0, acumPesos=0.0;
   
@@ -548,7 +540,7 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
   //Para extender la cover!
   int maximoValor=0; 
   
-  for(i=0;i<(int)vec.size()&&acumA<bMochila+0.5;++i){
+  for(i=0;i<len&&acumA<bMochila+0.5;++i){
     maximoValor=max(maximoValor,(int)rmatvalOriginal[vec[i].second]);
     acumA += rmatvalOriginal[vec[i].second];
     acumPesos += (1.-xestrella[rmatindOriginal[vec[i].second]]);
@@ -586,10 +578,10 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
     sort(cut_matind,cut_matind+ptr);
     int distintas=unique(cut_matind,cut_matind+ptr)-cut_matind;
     
-    cerr << "Cover violado. Lo extendimos por " << distintas-noZeroCount<<".Van "<<(++totCortesGreedy)<<" !"  << endl;
+    //cerr << "Cover violado. Lo extendimos por " << distintas-noZeroCount<<".Van "<<(++totCortesGreedy)<<" !"  << endl;
     
     CPXcutcallbackadd(env, cbdata, wherefrom, distintas, rhs, 'L', cut_matind, cut_matval, 0);
-    tengoCover++;
+    return 1;
   }
   return tengoCover;
 }
@@ -600,9 +592,6 @@ int greedyForCovern(int fila,CPXCENVptr env,void *cbdata,int wherefrom ){
 Elapsed real time = 5025.96 sec. (tree size = 886.63 MB, solutions = 7)
 Nodefile size = 759.10 MB (435.38 MB after compression)
   28541 18245  -117307.9430   541  -103157.5365  -119763.6160  1011636   16.10%
-
-
-
 
 
 
@@ -620,13 +609,6 @@ Cover violado
    5674  4360  -121856.2725   597   -95024.2072  -121847.2772   231677   28.23%
    5872  4533  -107251.7208   286   -95024.2072  -121837.6007   241987   28.22%
 Cover violado
-
-
-
-
-
-
-
 
 
 */
