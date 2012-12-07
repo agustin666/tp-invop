@@ -15,9 +15,10 @@
 
 Agustin Brian Federico 
 
-//#define COVERGREEDY
+//~ #define COVERGREEDY
 //#define COVERDP
-//#define CORTECLIQUE
+#define CORTECLIQUE
+//#define CUTANDBRANCH
 //
 // miplib3 instancias (#columnas,nombre)
 //[(33, 'p0033'), (45, 'stein45'), (89, 'lseu'), (100, 'enigma'), (201, 'p0201'), (282, 'p0282'), (319, 'mod008'), (548, 'p0548'), (1372, 'seymour'), (1989, 'l152lav'), (2655, 'mod010'), (2756, 'p2756'), (2993, 'harp2'), (6000, 'cap6000'), (7195, 'air05'), (8904, 'air04'), (10724, 'mitre'), (10757, 'air03'), (63009, 'fast0507'), (87482, 'nw04')]
@@ -65,14 +66,16 @@ int ejes;
 int* lastSepClique,*nextSepClique,*adjSepClique;
 int ejesSepClique; 
 
+
+
 void add_edge(int u,int v){
+	cerr << u<<','<<v << endl;
     next[ejes]=last[u]; adj[ejes]=v; last[u]=ejes++;
     swap(u,v);
     next[ejes]=last[u]; adj[ejes]=v; last[u]=ejes++;
 }
 
 int main(int argc, char *argv[]){
-  
   string archivo;
   if(isParam("-f", argv, argc)){
     archivo = getParam("-f", argv, argc);
@@ -146,8 +149,8 @@ int main(int argc, char *argv[]){
     status = CPXsetintparam(env, CPX_PARAM_CLIQUES, -1);
     status = CPXsetintparam(env, CPX_PARAM_THREADS, 1);
     status = CPXsetintparam(env, CPX_PARAM_MIPSEARCH, 1);
-    status = CPXsetintparam(env, CPX_PARAM_MIPCBREDLP, CPX_OFF);
   }
+    status = CPXsetintparam(env, CPX_PARAM_MIPCBREDLP, CPX_OFF);
   
   //Lectura de instancia
   CPXreadcopyprob(env,lp,archivo.c_str(), NULL);
@@ -189,7 +192,7 @@ int main(int argc, char *argv[]){
   
   for(int i=0;i<cantVar;++i){
     add_edge(i*2,i*2+1);          // i y ~i son conflicto
-    for(int j=i+1;j<min(cantVar,10000/cantVar);++j){ 
+    for(int j=i+1;j<cantVar;++j){ 
       bool serompe;
       for(int a=0;a<4;++a){
         int probi=a&1;      // si probx es 1 entonces uso la variable original si es 0 uso al complemento
@@ -220,6 +223,17 @@ int main(int argc, char *argv[]){
         }
       }   
     }
+  }
+  
+  cerr << "EJES "<< endl;
+  for(int i=0;i<ejes;++i){
+	  cerr << i << ' ' << next[i] << ' ' << adj[i] << endl;
+  }
+  
+  
+  cerr << "VERTICES "<< endl;
+  for(int i=0;i<2*cantVar;++i){
+	  cerr << i/2 <<(i&1?'*':' ') <<' ' << last[i] << endl ;
   }
   
   #endif
@@ -297,9 +311,29 @@ int main(int argc, char *argv[]){
 ///////////////////////////////////////
 static int losCutCallbacks (CPXCENVptr env, void *cbdata, int wherefrom, void *cbhandle, int *useraction_p){
 	int status;
+	
+	//Cut-and-Branch
+	
+	#ifdef CUTANDBRANCH
+	CPXINT result;
+	status = CPXgetcallbacknodeinfo(env, cbdata, wherefrom, 0, CPX_CALLBACK_INFO_NODE_DEPTH, &result);
+	//~ if(result==0){cerr << "alto cutandbranch" << endl; return 0;}
+	if(result){return 0;}
+	#endif
+	///////////////////
+	
+	
+	
+	
 	//Traemos la solucion de la relajacion
 	status = CPXgetcallbacknodex(env,cbdata,wherefrom,xestrella,0,cantVar-1);
   JOYA;
+  
+  
+	//~ cerr << " PRIMER XESTRELLA " << endl;
+	//~ for(int i=0;i<cantVar;++i){
+		//~ cerr << i << ' ' << xestrella[i] << endl;
+	//~ }
   
   #if defined COVERDP || defined COVERGREEDY
 	theCovernCuts(env, cbdata, wherefrom, cbhandle, useraction_p);
@@ -336,7 +370,7 @@ void theCovernCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int 
 }
 
 
-#define COTACLIQUE 500
+#define COTACLIQUE 50
 int szclique;
 int miclique[1010];
 int cantcliques;
@@ -372,7 +406,13 @@ void genclique(int nodo, int pos,vector< pair<double, int> > &xestrella,double a
 		cantcliques++;
 		
 		if(acum>=1.001){
+			
 			cerr<<"Metimos clique cut "<< acum <<' ' << szclique<< endl;
+
+			cerr << "xestrella " << endl;
+			for(int i=0;i<xestrella.size();++i){
+				cerr << xestrella[i].first << ' ' << xestrella[i].second<<endl;
+			}
 			
 			double rhs = 1.;
 			
@@ -408,8 +448,10 @@ void ohMyCliqueCuts(CPXCENVptr env,void *cbdata,int wherefrom,void *cbhandle,int
 	//Armamos subgrafo inducido por xestrella
 	//~ memset(lastSepClique, -1 , sizeof lastSepClique);
 	//~ int ejesActual = 0;
+	
+			
 	for(int i=0;i<cantVar;++i){
-		if(xestrella[i]<=0.01)continue;
+		//~ if(xestrella[i]<=0.01)continue;
 		//~ int ejeActual = last[i];
 		//~ while(ejeActual != -1){
 			//~ if(xestrella[adj[ejeActual]]>0.01){
