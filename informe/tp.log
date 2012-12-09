@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  9 DEC 2012 16:19
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  9 DEC 2012 19:43
 entering extended mode
  %&-line parsing enabled.
 **tp.tex
@@ -551,7 +551,7 @@ LaTeX Info: Redefining \pageref on input line 13.
 \openout4 = `tp.out'.
 
 \AtBeginShipoutBox=\box40
- (./Caratula.tex) <logo_dc.jpg, id=62, 215.6055pt x 83.5923pt>
+ (./Caratula.tex) <logo_dc.jpg, id=58, 215.6055pt x 83.5923pt>
 File: logo_dc.jpg Graphic file (type jpg)
 
 <use logo_dc.jpg>
@@ -563,7 +563,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 16.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 16.
-<logo_uba.jpg, id=63, 225.4824pt x 231.7458pt>
+<logo_uba.jpg, id=59, 225.4824pt x 231.7458pt>
 File: logo_uba.jpg Graphic file (type jpg)
  <use logo_uba.jpg>
 Underfull \hbox (badness 10000) in paragraph at lines 16--16
@@ -578,16 +578,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 16--16
 \openout5 = `tp.toc'.
 
  [2] (./Introduccion.tex [3]) [4] (./CortesCover.tex
-[5] [6]) [7] (./CortesClique.tex) [8] (./Resultados.tex) [9]
-(./Conclusiones.tex) [10] (./tp.aux) ) 
+[5] [6]
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 125.
+ [7]) [8] (./CortesClique.tex) [9] (./Resultados.tex) [10]
+(./Conclusiones.tex) [11] (./tp.aux) ) 
 Here is how much of TeX's memory you used:
- 12302 strings out of 495061
- 202598 string characters out of 1182621
- 281670 words of memory out of 3000000
- 15164 multiletter control sequences out of 15000+50000
+ 12355 strings out of 495061
+ 203573 string characters out of 1182621
+ 288910 words of memory out of 3000000
+ 15214 multiletter control sequences out of 15000+50000
  6879 words of font info for 25 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 54i,12n,51p,701b,382s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 54i,12n,74p,701b,634s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/pub
 lic/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
 s/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmcsc1
@@ -602,9 +605,9 @@ share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf
 -texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive/fon
 ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/pu
 blic/amsfonts/cm/cmtt10.pfb>
-Output written on tp.pdf (10 pages, 565361 bytes).
+Output written on tp.pdf (11 pages, 571347 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
- 135 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 210 PDF objects out of 1000 (max. 8388607)
+ 42 named destinations out of 1000 (max. 500000)
+ 127 words of extra memory for PDF output out of 10000 (max. 10000000)
 

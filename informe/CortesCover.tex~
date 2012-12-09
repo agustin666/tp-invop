@@ -121,6 +121,8 @@ Luego de tener ordenadas las variables por el criterio expuesto, se van tomando 
 
 A continuaci\'on se presenta el pseudoc\'odigo de este algoritmo de separaci\'on aproximado.
 
+
+\todo{pseudo}
 \bigskip
 \begin{algorithmic}
 \Function{CoverGreedy}{}
@@ -133,8 +135,49 @@ A continuaci\'on se presenta el pseudoc\'odigo de este algoritmo de separaci\'on
 \medskip
 \subsubsection{Programaci\'on Din\'amica}
 
-\medskip
-\subsection{Adecuaci\'on de restricciones}
+Una segunda opci\'on para resolver el problema de optimizaci\'on propuesto es utilizar un algoritmo exacto mediante la t\'ecnica de programaci\'on din\'amica.
+
+Esta t\'ecnica se basa en obtener el \'optimo para un problema, asumiendo que ya se tienen los \'optimos para los subproblemas que lo conforman y que el \'optimo del problema original esta necesariamente conformado por algunos de los \'optimos de los subproblemas.
+
+
+En este caso, el problema que se ir\'a resolviendo ser\'a el de obtener la m\'inima funci\'on objetivo si se usa hasta el item $i$ de los $n$ disponibles, y se quiere sobrepasar el peso \~b.
+
+Cuando $i$ sea igual a $n$ y \~b sea igual a b, se estar\'a obteniendo la m\'imina funci\'on objetivo utilizando todos los items y teniendo como restricci\'on la desigualdad original del problema que se necesitaba resolver. Luego, si este valor es menor a 1 significa que hay una desigualdad cover violada para introducir como plano de corte.
+
+
+
+Para resolver un problema con un $i$ y un \~b particulares la idea es basarse en los dos siguientes casos.
+
+\begin{itemize}
+\item Se usa el item $i$ en la soluci\'on, entonces la mejor funci\'on objetivo es la que era la mejor soluci\'on cuando se utilizaba hasta el item $i$-1 y se quer\'ia sobrepasar \~b-$a_{i}$, sumado al valor por utilizar el item $i$ (o sea 1-$x_i^*$).
+\item No se utiliza el item $i$ en la soluci\'on, entonces la mejor funci\'on objetivo es la que era la mejor soluci\'on cuando se utilizaba hasta el item $i$-1 y se quer\'ia sobrepasar \~b.
+\end{itemize}
+
+Luego, el \'optimo para el problema actual resulta de tomar la mejor opci\'on entre las dos propuestas.
+
+Es importante notar que en ambas opciones se utilizan \'optimos de problemas que incluyen una menor cantidad de items por lo que ya se suponen resueltos si los mismos se van resolviendo en un orden adecuado.
+
+
+A continuaci\'on se presenta el pseudoc\'odigo para este algoritmo de separaci\'on
+
+
+\todo{pseudo}
+\bigskip
+\begin{algorithmic}
+\Function{CoverDP}{}
+\EndFunction
+\end{algorithmic}
+\bigskip
+
+A diferencia del algoritmo greedy, el algoritmo por programaci\'on din\'amica siempre encuentra el \'optimo al problema planteado por lo que si existe desigualdad violada, va a ser hallada por este algoritmo, mientras que pod\'ia suceder que la versi\'on greedy no lo lograse. 
+
+Sin embargo, se nota que el algoritmo de programaci\'on din\'amica tiene una complejidad temporal perteneciente a $\mathcal{O}(N*b)$, siendo $N$ la cantidad de variables y $b$ el rhs de la \'unica desigualdad del modelo. Este tipo de algoritmos, en los que la complejidad depende del valor num\'erico de la entrada y no de su tama\~no, se denominan algoritmo pseudopolinomiales y su tiempo de ejecuci\'on podr\'ia resultar prohibitivo si se cuenta con un $b$ muy grande; mientras que el algoritmo greedy si resulta polinomial.
+
 
 \bigskip
 \subsection{Lifteo}
+
+Algo interesante a realizar con una desigualdad v\'alida que se quiere ingresar como plano de corte, es analizar la posibilidad de \emph{liftearla} para fortalecerla. \emph{Liftear} una desigualdad por menor o igual significa hacer crecer los coeficientes que acompa\~nan a las variables, obviamente siempre y cuando la desigualdad siga siendo v\'alida. Cuando se habla de hacer crecer los coeficientes puede ser tanto incrementando los de las variables que ya se encuentran en la desigualdad, como agregando variables a la desigualdad con coeficientes positivos.
+
+
+En el caso de las desigualdades cover existe un lifteo que es simple de demostrar su validez y a la vez es simple de implementar. Si ya se cuenta una desigualdad cover, se puede agregar a la desigualdad cualquier variable que tenga un $a_i$ asociado mayor o igual a todos los $a_i$ de las varibles que ya se encuentran en la desigualdad.

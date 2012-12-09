@@ -4,8 +4,7 @@
 \BOOKMARK [2][-]{subsection.2.2}{Algoritmo de separaci\363n}{section.2}
 \BOOKMARK [3][-]{subsubsection.2.2.1}{Greedy}{subsection.2.2}
 \BOOKMARK [3][-]{subsubsection.2.2.2}{Programaci\363n Din\341mica}{subsection.2.2}
-\BOOKMARK [2][-]{subsection.2.3}{Adecuaci\363n de restricciones}{section.2}
-\BOOKMARK [2][-]{subsection.2.4}{Lifteo}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{Lifteo}{section.2}
 \BOOKMARK [1][-]{section.3}{Cortes Clique}{}
 \BOOKMARK [2][-]{subsection.3.1}{Formulaci\363n}{section.3}
 \BOOKMARK [2][-]{subsection.3.2}{Construcci\363n del grafo}{section.3}
