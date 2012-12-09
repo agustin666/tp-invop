@@ -1,0 +1,30 @@
+\section{Introducci\'on}
+
+En el presente trabajo se presenta la implementaci\'on de cortes generales para la resoluci\'on de modelos de Programaci\'on Lineal Entera, en particular para problemas con todas las variables binarias.
+
+El trabajo tiene varios objetivos, a saber
+
+\paragraph{Interacci\'on con CPLEX} \\
+
+CPLEX es un paquete de software comercial y acad\'emico para resoluci\'on de problemas de Programaci\'on Lineal y Programaci\'on Lineal Entera. CPLEX es un framework muy poderoso para la resoluci\'on de este tipo de problemas, siendo mundialmente reconocido como uno de los dos mejores y m\'as completos softwares para este objetivo.
+
+Uno de los objetivos de este trabajo es conocer el funcionamiento de este paquete no solo mediante la mera interacci\'on para la resoluci\'on de problemas, sino intentando reemplazar parte del trabajo que este realiza para lograr un mejor entendimiento.
+
+
+
+\paragraph{Cortes de prop\'osito general} \\
+
+Otro de los objetivos de este trabajo es poder entender los cortes de prop\'osito general vistos en la materia. Si bien cada problema de Programaci\'on Lineal Entera merece un estudio particular para atacarlo, cada vez son m\'as las herramientas generales que se desarrollan para tratar de resolver cualquier problema. Estas herramientas son la pieza fundamental para los paquetes de software de resoluci\'on general como CPLEX. Estas herramientas son el complemento ideal a la informaci\'on particular del problema que puede proporcionar el usuario de CPLEX.
+
+En lo que respecta a planos de corte, en la mayor\'ia de los casos, lo mejor es buscar desigualdades v\'alidas espec\'ificas para cada problema. Sin embargo, cuando estas no son halladas, resulta muy util que CPLEX tenga formas de generar cortes sin importar el problema que se est\'a tratando. 
+
+En nuestro caso, se vieron tres tipos de cortes de prop\'osito general. Los cortes \emph{Cover}, \emph{Clique} y \emph{Gomory}
+
+
+
+\paragraph{Implementaci\'on de cortes} \\
+
+Si bien en la materia se ve la teor\'ia y la fundamentaci\'on de los cortes anteriormente mencionados, tambi\'en es un objetivo de este trabajo toparse con las dificultades a la hora de implementar estos cortes. En varios de los cortes el preprocesamiento necesario y el algoritmo de separaci\'on no son triviales de implementar, incluyendo decisiones que tienen fuerte impacto en la performance de los mismos, tanto desde el punto de vista de la calidad del corte encontrado como desde el tiempo de ejecuci\'on consumido.
+- implementarlos (gomory quedo fuera)
+
+%- comparar contra branch and bound y contra cplex (b&c, c&b, b&b)
