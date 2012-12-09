@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  9 DEC 2012 11:24
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  9 DEC 2012 12:14
 entering extended mode
  %&-line parsing enabled.
 **tp.tex
@@ -577,28 +577,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 16--16
 \tf@toc=\write5
 \openout5 = `tp.toc'.
 
- [2] (./Introduccion.tex) [3] (./CortesCover.tex) [4]
-(./CortesClique.tex) [5] (./Resultados.tex) [6] (./Conclusiones.tex) [7]
-(./tp.aux) ) 
+ [2] (./Introduccion.tex [3]) [4] (./CortesCover.tex)
+[5] (./CortesClique.tex) [6] (./Resultados.tex) [7] (./Conclusiones.tex)
+[8] (./tp.aux) ) 
 Here is how much of TeX's memory you used:
- 12261 strings out of 495061
- 202091 string characters out of 1182621
- 274670 words of memory out of 3000000
- 15141 multiletter control sequences out of 15000+50000
- 6232 words of font info for 23 fonts, out of 3000000 for 9000
+ 12272 strings out of 495061
+ 202188 string characters out of 1182621
+ 281670 words of memory out of 3000000
+ 15146 multiletter control sequences out of 15000+50000
+ 6578 words of font info for 24 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 54i,8n,51p,361b,320s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmss10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
-mssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb
->
-Output written on tp.pdf (7 pages, 481696 bytes).
+ 54i,8n,51p,701b,382s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-
+texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmss10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+cm/cmssbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti10
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on tp.pdf (8 pages, 501026 bytes).
 PDF statistics:
- 150 PDF objects out of 1000 (max. 8388607)
- 23 named destinations out of 1000 (max. 500000)
+ 163 PDF objects out of 1000 (max. 8388607)
+ 28 named destinations out of 1000 (max. 500000)
  135 words of extra memory for PDF output out of 10000 (max. 10000000)
 

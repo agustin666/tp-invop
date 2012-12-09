@@ -4,16 +4,16 @@ En el presente trabajo se presenta la implementaci\'on de cortes generales para 
 
 El trabajo tiene varios objetivos, a saber
 
-\paragraph{Interacci\'on con CPLEX} \\
-
+\paragraph{Interacci\'on con CPLEX} 
+\medskip
 CPLEX es un paquete de software comercial y acad\'emico para resoluci\'on de problemas de Programaci\'on Lineal y Programaci\'on Lineal Entera. CPLEX es un framework muy poderoso para la resoluci\'on de este tipo de problemas, siendo mundialmente reconocido como uno de los dos mejores y m\'as completos softwares para este objetivo.
 
 Uno de los objetivos de este trabajo es conocer el funcionamiento de este paquete no solo mediante la mera interacci\'on para la resoluci\'on de problemas, sino intentando reemplazar parte del trabajo que este realiza para lograr un mejor entendimiento.
 
 
 
-\paragraph{Cortes de prop\'osito general} \\
-
+\paragraph{Cortes de prop\'osito general} 
+\medskip
 Otro de los objetivos de este trabajo es poder entender los cortes de prop\'osito general vistos en la materia. Si bien cada problema de Programaci\'on Lineal Entera merece un estudio particular para atacarlo, cada vez son m\'as las herramientas generales que se desarrollan para tratar de resolver cualquier problema. Estas herramientas son la pieza fundamental para los paquetes de software de resoluci\'on general como CPLEX. Estas herramientas son el complemento ideal a la informaci\'on particular del problema que puede proporcionar el usuario de CPLEX.
 
 En lo que respecta a planos de corte, en la mayor\'ia de los casos, lo mejor es buscar desigualdades v\'alidas espec\'ificas para cada problema. Sin embargo, cuando estas no son halladas, resulta muy util que CPLEX tenga formas de generar cortes sin importar el problema que se est\'a tratando. 
@@ -22,11 +22,19 @@ En nuestro caso, se vieron tres tipos de cortes de prop\'osito general. Los cort
 
 
 
-\paragraph{Implementaci\'on de cortes} \\
-
+\paragraph{Implementaci\'on de cortes} 
+\medskip
 Si bien en la materia se ve la teor\'ia y la fundamentaci\'on de los cortes anteriormente mencionados, tambi\'en es un objetivo de este trabajo toparse con las dificultades a la hora de implementar estos cortes. En varios de los cortes el preprocesamiento necesario y el algoritmo de separaci\'on no son triviales de implementar, incluyendo decisiones que tienen fuerte impacto en la performance de los mismos, tanto desde el punto de vista de la calidad del corte encontrado como desde el tiempo de ejecuci\'on consumido.
 
+Por ejemplo, un caso claro donde se nota que la implementaci\'on no es trivial es en los cortes de Gomory. Estos utilizan informaci\'on de la relajaci\'on lineal de cada nodo del arbol de branch-and-bound, que no es facilmente accesible ya que CPLEX trabaja con una versi\'on reducida del problema original por cuestiones de eficiencia, por lo que no es simple realizar una correspondencia entre el problema reducido y el original. Es por esto que la implementaci\'on de los cortes de Gomory qued\'o fuera del trabajo ya que representaba un obst\'aculo solamente de traducci\'on de las variables y no de alg\'un punto interesante para analizar de la materia.
 
-- implementarlos (gomory quedo fuera)
+\paragraph{Comparaci\'on entre diferentes m\'etodos de resoluci\'on} 
+\medskip
+Por \'ultimo se buscar\'a realizar una comparaci\'on entre diferentes m\'etodos de resoluci\'on general.
 
-%- comparar contra branch and bound y contra cplex (b&c, c&b, b&b)
+\begin{itemize}
+\item Branch-and-Bound: Resoluci\'on autom\'atica de CPLEX, quitando todo el preprocesamiento posible y la capacidad de generar cortes, para que la resoluci\'on sea simplemente por el arbol de Branch-and-Bound.
+\item Cut-and-Brach: Es un caso particular de aplicaci\'on de cortes, en donde los mismos solo se aplican al nodo ra\'iz del arbol. La idea de esto es poner bastante esfuerzo computacional es fortalecer el problema original de la mejor manera que se pueda, para luego lanzar un Branch-and-Bound cl\'asico, pero que deber\'ia tomar menos tiempo al trabajar sobre una formulaci\'on m\'as fuerte.
+\item Branch-and-Cut: Mezcla el arbol de Branch-and-Bound manejado por CPLEX con los cortes implementados en el trabajo. Los cortes se aplican en cada nodo del arbol para cortar soluciones fraccionarias \'optimas.
+\end{itemize}
+
