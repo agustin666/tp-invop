@@ -3,19 +3,132 @@
 
 \subsection{Formulaci\'on}
 
+Los cortes cover son cortes generales que estan relacionados con restricciones mochila del problema a tratar.
+
+Una restricci\'on mochila es una desigualdad de la forma
+
+\begin{equation}
+\sum\limits_{i=1}^n a_i . x_i \leq b
+\end{equation}
+
+En donde el $b$ debe ser un n\'umero entero y los $a_i$ deben ser enteros y positivos.
+
+
+Este tipo de desigualdades indican que al juntar varias variables con pesos positivos no puede ser mayor a cierto valor $b$. Esto induce a ciertas desigualdades v\'alidas que se denominan desigualdades \emph{cover}. Un \emph{cover} es un conjunto de variables que, al tenerlos todas juntas con valor 1, violan una desigualdad mochila ya que se exceden de lado derecho permitido.
+
+Por ejemplo, si se tiene la desigualdad
+
+\begin{equation}
+3 x_1 + 5 x_2 + x_3 \leq 7
+\end{equation}
+
+se observa que las variables $x_1$ y $x_2$ forman un cover, ya que no se podr\'ian tener ambas en 1 en una soluci\'on factible. Obviamente, al tener un cover y agregar cualquier otra variable, se tiene nuevamente un cover porque ya de antemano se estaba excediendo el valor de $b$. Se dice que un cover es \emph{minimal}, cuando no se puede sacar ninguna variable del conjunto y seguir teniendo un cover. En este caso los covers son $\{$1,2,3$\}$ y $\{$1,2$\}$, pero solamente el segundo conforma un cover minimal.
 
 
 
+Luego, lo que dice intuitivamente esta situaci\'on es que dado un cover $C$, en cualquier soluci\'on factible del problema no se pueden tener todas las variables pertenecientes a $C$ con valor 1. Al menos una de las variables debe estar \emph{apagada}.
 
+Formalmente, un cover $C$ para una desigualdad mochila induce la siguiente desigualdad v\'alidad para el modelo.
 
+\begin{equation}
+\sum\limits_{i \in C} x_i \leq \mid C\mid - 1
+\end{equation}
 
 
 \bigskip
 \subsection{Algoritmo de separaci\'on}
 
+Para lograr introducir cortes cover se guardan todas las restricciones mochila desde un principio para luego ver que desigualdades v\'alidas est\'an violadas en cada nodo repasando cada una de las desigualdades mochilas originales.
+
+Si bien no todas las restricciones del problema original son restricciones mochilas con las caracter\'isticas pedidas, hay formas de reformular las restricciones para que se conviertan en desigualdades mochilas a ser revisadas para generar potencialmente desiguadades cover.
+
+Existen varias formas de reformulaci\'on m\'as y menos complejas para convertir las desigualdades originales. En este caso se utiliz\'o un preprocesamiento simple que consiste en invertir el orden de las desigualdades que en el problema original esten con signo $\geq$. Se not\'o que en varias de las instancias utilizadas, muchas de las restricciones se encuentran formuladas por mayor igual y con un simple cambio de signo se logra reformular la desigualdad de forma que si cumpla con los requisitos necesarios para ser desigualdad mochila candidata a generadora de cortes cover.
+
+
+
+\bigskip
+
+Una vez que se tienen todas las desigualdades mochila del problema original, el algoritmo de separaci\'on consiste en ver en cada nodo, cada una de las desigualdades originales, y buscar si la soluci\'on de la relajaci\'on lineal del nodo actual viola o no la desigualdad cover inducida por la mochila.
+
+
+
+Para ver si existe un cover violado se utiliza el siguiente razonamiento, donde se denomina $x^*$ a la soluci\'on del nodo actual.
+
+Una desigualdad cover es de la forma
+
+\begin{equation}
+\sum\limits_{i \in C} \leq \mid C \mid - 1
+\end{equation}
+
+Despejando la desigualdad anterior se puede obtener la siguiente expresi\'on
+
+\begin{equation}
+1 \leq \sum\limits_{i \in C}(1 - x_i)
+\end{equation}
+
+
+Luego, ver si existe un cover violado es an\'alogo a ver si existe un cover que cumpla la siguiente desigualdad
+
+\begin{equation}
+1 > \sum\limits_{i \in C} (1 - x_i^*)
+\end{equation}
+
+Resolver esta cuesti\'on es an\'alogo a resolver el siguiente problema de optimizaci\'on
+
+\begin{equation}
+minizar \sum\limits_{i=1}^n(1-x_i^*).y_i
+\end{equation}
+
+Sujeto a:
+
+\begin{equation}
+\sum\limits_{i=1}^n a_i . y_i > b
+\end{equation}
+
+
+Donde $y$ representa el vector caracter\'istico de pertenencia a un cover.
+
+Se esta buscando minimizar la funci\'on objetivo, pero cumpliendo la desigualdad presentada. Si el valor de la minimizaci\'on da menor a 1, entonces se encontro el vector caracter\'istico para un cover violado ya que, por la restricci\'on, los pesos suman m\'as que el $b$ permitido y, por la funci\'on objetivo, violan fehacientemente la desigualdad cover asociada.
+
+
+\medskip
+
+Algo importante a notar es que como todos los valores que se manejan son enteros, la restricci\'on del anterior modelo se puede reemplazar por una en donde se utilice un mayor igual, en vez de un mayor estricto.
+
+\begin{equation}
+\sum\limits_{i=1}^n a_i . y_i \geq b + 1
+\end{equation}
+
+
+
+
+El problema de separaci\'on original se tradujo en resolver el problema de optimizaci\'on recientemente presentado. A continuaci\'on se presentan las diferentes formas de resolver o aproximar este problema.
 
 \bigskip
 \subsubsection{Greedy}
+
+Una primer idea posible para resolver este problema es hacerlo mediante un algoritmo goloso.
+
+Si bien esta idea no resuelve el problema hasta la optimalidad, puede dar una muy buena aproximaci\'on a la soluci\'on real. Adem\'as es importante destacar que no se necesita necesariamente el m\'inimo del problema presentado, con obtener cualquier $y$ factible que su funci\'on objetivo valga menos que 1, se estar\'a encontrando un cover violado por el \'optimo de la relajaci\'on lineal del nodo actual.
+
+
+En el problema hay que ver cuales variables se eligen para hacer lo m\'as chico posible la funci\'on objetivo, pero a la vez es importante poder hacer v\'alida la restricci\'on, eligiendo variables que tengan costos asociados altos.
+
+El algoritmo goloso dise\~nado trata de encontrar una soluci\'on teniendo en cuenta los dos factores mencionados. Lo que se hizo fue ir elegiendo las variables golosamente, para esto se orden\'o las variables de forma decreciente respecto del valor $a_i / (1-x_i^*)$. Este valor asociado tiene el doble objetivo de tratar de tomar variables con costos asociados altos, pero que tengan un peque\~no valor asociado en la funci\'on objetivo.
+
+Luego de tener ordenadas las variables por el criterio expuesto, se van tomando las variables golosamente hasta que se cumpla la restricci\'on. Cuando sucede esto solo resta saber si la funci\'on objetivo tiene valor por debajo de 1 o no.
+
+
+A continuaci\'on se presenta el pseudoc\'odigo de este algoritmo de separaci\'on aproximado.
+
+\bigskip
+\begin{algorithmic}
+\Function{CoverGreedy}{}
+  \State $y \gets \overrightarrow 0$
+\EndFunction
+\end{algorithmic}
+
+
 
 \medskip
 \subsubsection{Programaci\'on Din\'amica}
