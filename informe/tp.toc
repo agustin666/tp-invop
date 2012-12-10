@@ -15,4 +15,4 @@
 \contentsline {subsection}{\numberline {3.2}Construcci\'on del grafo}{9}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Algoritmo de separaci\'on}{9}{subsection.3.3}
 \contentsline {section}{\numberline {4}Resultados}{10}{section.4}
-\contentsline {section}{\numberline {5}Conclusiones}{11}{section.5}
+\contentsline {section}{\numberline {5}Conclusiones}{13}{section.5}

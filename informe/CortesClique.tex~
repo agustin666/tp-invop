@@ -1,13 +1,27 @@
 \section{Cortes Clique}
 
-
+\bigskip
 \subsection{Formulaci\'on}
 
+sale de un grafo
 
+hay que armar el grafo
+
+luego buscas cosas que no van juntas
+
+clique!
+
+
+
+\bigskip
 \subsection{Construcci\'on del grafo}
 
+probing de a dos cosas, son 4 casos
+
+buscas alguna restriccion violada insalvable poniendo en uno todos los negativos y ves bla bla
 
 
+\bigskip
 \subsection{Algoritmo de separaci\'on}
 
-\subsubsection{}
+

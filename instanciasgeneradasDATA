@@ -39,12 +39,44 @@ Total mochila: 153
 Total covers: 12
 
 //Instancia 6
+Ejes en el grafo de conflicto 2236
+Total de variables: 359
+Total de filas: 171
+Mochilas por mayor 0
+Total mochila: 154
+Total covers: 17
+
+//Instancia 7
+Ejes en el grafo de conflicto 2496
+Total de variables: 407
+Total de filas: 197
+Mochilas por mayor 0
+Total mochila: 179
+Total covers: 18
+
+//Instancia 8
+Ejes en el grafo de conflicto 2716
+Total de variables: 450
+Total de filas: 212
+Mochilas por mayor 0
+Total mochila: 196
+Total covers: 16
+
+//Instancia 6
 Ejes en el grafo de conflicto 2852
 Total de variables: 484
 Total de filas: 236
 Mochilas por mayor 0
 Total mochila: 217
 Total covers: 19
+
+//Instancia 10
+Ejes en el grafo de conflicto 3334
+Total de variables: 550
+Total de filas: 256
+Mochilas por mayor 0
+Total mochila: 242
+Total covers: 14
 
 //Instancia 7
 Ejes en el grafo de conflicto 3822
@@ -60,38 +92,6 @@ Total de filas: 717
 Mochilas por mayor 0
 Total mochila: 658
 Total covers: 59
-
-//Instancia 8
-Ejes en el grafo de conflicto 2716
-Total de variables: 450
-Total de filas: 212
-Mochilas por mayor 0
-Total mochila: 196
-Total covers: 16
-
-//Instancia 10
-Ejes en el grafo de conflicto 3334
-Total de variables: 550
-Total de filas: 256
-Mochilas por mayor 0
-Total mochila: 242
-Total covers: 14
-
-//Instancia 6
-Ejes en el grafo de conflicto 2236
-Total de variables: 359
-Total de filas: 171
-Mochilas por mayor 0
-Total mochila: 154
-Total covers: 17
-
-//Instancia 7
-Ejes en el grafo de conflicto 2496
-Total de variables: 407
-Total de filas: 197
-Mochilas por mayor 0
-Total mochila: 179
-Total covers: 18
 
 
 

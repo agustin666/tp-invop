@@ -2,9 +2,282 @@
 Corriendo inst1.lp con B&B
 ./Tp -f inst1.lp -t  >/dev/null
 ***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con C&B Greedy
+./Tp -f inst1.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con C&B Clique
+./Tp -f inst1.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con C&B Greedy y Clique
+./Tp -f inst1.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con Greedy
+./Tp -f inst1.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con Clique
+./Tp -f inst1.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst1.lp con Greedy y Clique
+./Tp -f inst1.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con B&B
+./Tp -f inst2.lp -t  >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con C&B Greedy
+./Tp -f inst2.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con C&B Clique
+./Tp -f inst2.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con C&B Greedy y Clique
+./Tp -f inst2.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con Greedy
+./Tp -f inst2.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con Clique
+./Tp -f inst2.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst2.lp con Greedy y Clique
+./Tp -f inst2.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con B&B
+./Tp -f inst3.lp -t  >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con C&B Greedy
+./Tp -f inst3.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con C&B Clique
+./Tp -f inst3.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con C&B Greedy y Clique
+./Tp -f inst3.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con Greedy
+./Tp -f inst3.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con Clique
+./Tp -f inst3.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst3.lp con Greedy y Clique
+./Tp -f inst3.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con B&B
+./Tp -f inst4.lp -t  >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con C&B Greedy
+./Tp -f inst4.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con C&B Clique
+./Tp -f inst4.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con C&B Greedy y Clique
+./Tp -f inst4.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con Greedy
+./Tp -f inst4.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con Clique
+./Tp -f inst4.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst4.lp con Greedy y Clique
+./Tp -f inst4.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con B&B
+./Tp -f inst5.lp -t  >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con C&B Greedy
+./Tp -f inst5.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con C&B Clique
+./Tp -f inst5.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con C&B Greedy y Clique
+./Tp -f inst5.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con Greedy
+./Tp -f inst5.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con Clique
+./Tp -f inst5.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst5.lp con Greedy y Clique
+./Tp -f inst5.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con B&B
+./Tp -f inst6.lp -t  >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con C&B Greedy
+./Tp -f inst6.lp -t -G -X >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con C&B Clique
+./Tp -f inst6.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con C&B Greedy y Clique
+./Tp -f inst6.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con Greedy
+./Tp -f inst6.lp -t -G >/dev/null
+***********
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con Clique
+./Tp -f inst6.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+CPLEX Error  1217: No solution exists.
+***********
+
+Corriendo inst6.lp con Greedy y Clique
+./Tp -f inst6.lp -t -G -K >/dev/null
+***********
+
+Corriendo inst1.lp con B&B
+./Tp -f inst1.lp -t  >/dev/null
+***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.002998
+Tiempo  = 0.001932
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 63.102984
@@ -15,7 +288,7 @@ Corriendo inst1.lp con C&B Greedy
 ***********
 Total covers encontradas 17
 Total clique encontradas 0
-Tiempo  = 0.007989
+Tiempo  = 0.006332
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 50.718318
@@ -27,7 +300,7 @@ Corriendo inst1.lp con C&B Clique
 Ejes en el grafo de conflicto 126
 Total covers encontradas 0
 Total clique encontradas 5
-Tiempo  = 0.003827
+Tiempo  = 0.004022
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 57.290728
@@ -39,7 +312,7 @@ Corriendo inst1.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 126
 Total covers encontradas 13
 Total clique encontradas 5
-Tiempo  = 0.005956
+Tiempo  = 0.012986
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 50.718318
@@ -50,7 +323,7 @@ Corriendo inst2.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.004195
+Tiempo  = 0.004494
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 131.694127
@@ -61,7 +334,7 @@ Corriendo inst2.lp con C&B Greedy
 ***********
 Total covers encontradas 26
 Total clique encontradas 0
-Tiempo  = 0.008759
+Tiempo  = 0.008900
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 96.169751
@@ -73,7 +346,7 @@ Corriendo inst2.lp con C&B Clique
 Ejes en el grafo de conflicto 290
 Total covers encontradas 0
 Total clique encontradas 9
-Tiempo  = 0.002719
+Tiempo  = 0.002295
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 105.196265
@@ -85,7 +358,7 @@ Corriendo inst2.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 290
 Total covers encontradas 18
 Total clique encontradas 9
-Tiempo  = 0.007087
+Tiempo  = 0.006936
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 91.543583
@@ -96,7 +369,7 @@ Corriendo inst3.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.003612
+Tiempo  = 0.002224
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 241.328893
@@ -107,7 +380,7 @@ Corriendo inst3.lp con C&B Greedy
 ***********
 Total covers encontradas 44
 Total clique encontradas 0
-Tiempo  = 0.015368
+Tiempo  = 0.016951
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 177.003756
@@ -131,7 +404,7 @@ Corriendo inst3.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 626
 Total covers encontradas 33
 Total clique encontradas 22
-Tiempo  = 0.014710
+Tiempo  = 0.014680
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 176.221233
@@ -142,7 +415,7 @@ Corriendo inst4.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.003984
+Tiempo  = 0.009025
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 657.440072
@@ -153,7 +426,7 @@ Corriendo inst4.lp con C&B Greedy
 ***********
 Total covers encontradas 124
 Total clique encontradas 0
-Tiempo  = 0.091985
+Tiempo  = 0.101135
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 475.573907
@@ -165,7 +438,7 @@ Corriendo inst4.lp con C&B Clique
 Ejes en el grafo de conflicto 1554
 Total covers encontradas 0
 Total clique encontradas 27
-Tiempo  = 0.007230
+Tiempo  = 0.007248
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 636.544978
@@ -177,7 +450,7 @@ Corriendo inst4.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 1554
 Total covers encontradas 103
 Total clique encontradas 49
-Tiempo  = 0.105141
+Tiempo  = 0.101543
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 468.910325
@@ -188,7 +461,7 @@ Corriendo inst5.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.004732
+Tiempo  = 0.004981
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 941.943356
@@ -199,7 +472,7 @@ Corriendo inst5.lp con C&B Greedy
 ***********
 Total covers encontradas 185
 Total clique encontradas 0
-Tiempo  = 0.182477
+Tiempo  = 0.198988
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 632.583498
@@ -211,7 +484,7 @@ Corriendo inst5.lp con C&B Clique
 Ejes en el grafo de conflicto 2062
 Total covers encontradas 0
 Total clique encontradas 12
-Tiempo  = 0.008381
+Tiempo  = 0.008100
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 920.353932
@@ -223,7 +496,7 @@ Corriendo inst5.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 2062
 Total covers encontradas 143
 Total clique encontradas 53
-Tiempo  = 0.177119
+Tiempo  = 0.177658
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 626.323623
@@ -234,7 +507,7 @@ Corriendo inst6.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.005336
+Tiempo  = 0.004776
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 909.175963
@@ -245,7 +518,7 @@ Corriendo inst6.lp con C&B Greedy
 ***********
 Total covers encontradas 179
 Total clique encontradas 0
-Tiempo  = 0.189069
+Tiempo  = 0.187416
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 655.330574
@@ -257,7 +530,7 @@ Corriendo inst6.lp con C&B Clique
 Ejes en el grafo de conflicto 2236
 Total covers encontradas 0
 Total clique encontradas 16
-Tiempo  = 0.008007
+Tiempo  = 0.007614
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 883.845455
@@ -269,7 +542,7 @@ Corriendo inst6.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 2236
 Total covers encontradas 140
 Total clique encontradas 67
-Tiempo  = 0.191397
+Tiempo  = 0.191555
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 644.841459
@@ -280,7 +553,7 @@ Corriendo inst7.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.005535
+Tiempo  = 0.010764
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1111.512719
@@ -291,7 +564,7 @@ Corriendo inst7.lp con C&B Greedy
 ***********
 Total covers encontradas 189
 Total clique encontradas 0
-Tiempo  = 0.207775
+Tiempo  = 0.211525
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 789.187803
@@ -303,7 +576,7 @@ Corriendo inst7.lp con C&B Clique
 Ejes en el grafo de conflicto 2496
 Total covers encontradas 0
 Total clique encontradas 20
-Tiempo  = 0.011497
+Tiempo  = 0.011618
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1089.283174
@@ -315,7 +588,7 @@ Corriendo inst7.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 2496
 Total covers encontradas 153
 Total clique encontradas 54
-Tiempo  = 0.222218
+Tiempo  = 0.222556
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 778.825366
@@ -326,7 +599,7 @@ Corriendo inst8.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.005884
+Tiempo  = 0.006386
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1111.091109
@@ -337,7 +610,7 @@ Corriendo inst8.lp con C&B Greedy
 ***********
 Total covers encontradas 223
 Total clique encontradas 0
-Tiempo  = 0.332275
+Tiempo  = 0.295556
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 799.345685
@@ -349,7 +622,7 @@ Corriendo inst8.lp con C&B Clique
 Ejes en el grafo de conflicto 2716
 Total covers encontradas 0
 Total clique encontradas 52
-Tiempo  = 0.015396
+Tiempo  = 0.015140
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1074.689065
@@ -361,56 +634,10 @@ Corriendo inst8.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 2716
 Total covers encontradas 170
 Total clique encontradas 108
-Tiempo  = 0.297191
+Tiempo  = 0.296269
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 793.736217
-***********
-
-Corriendo inst9.lp con B&B
-./Tp -f inst9.lp -t  >/dev/null
-***********
-Total covers encontradas 0
-Total clique encontradas 0
-Tiempo  = 0.006831
-#nodos  = 0
-Gap  = -0.00%
-Valor de la solucion  = 1337.292364
-***********
-
-Corriendo inst9.lp con C&B Greedy
-./Tp -f inst9.lp -t -G -X >/dev/null
-***********
-Total covers encontradas 237
-Total clique encontradas 0
-Tiempo  = 0.330046
-#nodos  = 0
-Gap  = -0.00%
-Valor de la solucion  = 923.283656
-***********
-
-Corriendo inst9.lp con C&B Clique
-./Tp -f inst9.lp -t -K -X >/dev/null
-***********
-Ejes en el grafo de conflicto 2852
-Total covers encontradas 0
-Total clique encontradas 14
-Tiempo  = 0.009540
-#nodos  = 0
-Gap  = -0.00%
-Valor de la solucion  = 1321.944489
-***********
-
-Corriendo inst9.lp con C&B Greedy y Clique
-./Tp -f inst9.lp -t -X -K -G >/dev/null
-***********
-Ejes en el grafo de conflicto 2852
-Total covers encontradas 177
-Total clique encontradas 91
-Tiempo  = 0.311647
-#nodos  = 0
-Gap  = -0.00%
-Valor de la solucion  = 916.926981
 ***********
 
 Corriendo inst91.lp con B&B
@@ -418,7 +645,7 @@ Corriendo inst91.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.010563
+Tiempo  = 0.007126
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1461.620012
@@ -429,7 +656,7 @@ Corriendo inst91.lp con C&B Greedy
 ***********
 Total covers encontradas 283
 Total clique encontradas 0
-Tiempo  = 0.547990
+Tiempo  = 0.476783
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1027.316771
@@ -438,10 +665,10 @@ Valor de la solucion  = 1027.316771
 Corriendo inst91.lp con C&B Clique
 ./Tp -f inst91.lp -t -K -X >/dev/null
 ***********
-Ejes en el grafo de conflicto 3328
+Ejes en el grafo de conflicto 3334
 Total covers encontradas 0
 Total clique encontradas 30
-Tiempo  = 0.017478
+Tiempo  = 0.015163
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1416.152038
@@ -453,7 +680,7 @@ Corriendo inst91.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 3334
 Total covers encontradas 215
 Total clique encontradas 80
-Tiempo  = 0.483716
+Tiempo  = 0.446041
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1012.057732
@@ -464,7 +691,7 @@ Corriendo inst92.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.008088
+Tiempo  = 0.007870
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1689.316530
@@ -475,7 +702,7 @@ Corriendo inst92.lp con C&B Greedy
 ***********
 Total covers encontradas 299
 Total clique encontradas 0
-Tiempo  = 0.665685
+Tiempo  = 0.583902
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1190.200534
@@ -487,7 +714,7 @@ Corriendo inst92.lp con C&B Clique
 Ejes en el grafo de conflicto 3822
 Total covers encontradas 0
 Total clique encontradas 14
-Tiempo  = 0.011996
+Tiempo  = 0.012269
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1654.273710
@@ -499,7 +726,7 @@ Corriendo inst92.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 3822
 Total covers encontradas 257
 Total clique encontradas 72
-Tiempo  = 0.644445
+Tiempo  = 0.645287
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 1185.898751
@@ -510,7 +737,7 @@ Corriendo inst93.lp con B&B
 ***********
 Total covers encontradas 0
 Total clique encontradas 0
-Tiempo  = 0.019033
+Tiempo  = 0.019218
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 4016.096160
@@ -521,7 +748,7 @@ Corriendo inst93.lp con C&B Greedy
 ***********
 Total covers encontradas 744
 Total clique encontradas 0
-Tiempo  = 3.730880
+Tiempo  = 4.554379
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 2793.529570
@@ -533,7 +760,7 @@ Corriendo inst93.lp con C&B Clique
 Ejes en el grafo de conflicto 9104
 Total covers encontradas 0
 Total clique encontradas 78
-Tiempo  = 0.070235
+Tiempo  = 0.070408
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 3911.505935
@@ -545,7 +772,54 @@ Corriendo inst93.lp con C&B Greedy y Clique
 Ejes en el grafo de conflicto 9104
 Total covers encontradas 561
 Total clique encontradas 233
-Tiempo  = 3.567255
+Tiempo  = 3.597564
 #nodos  = 0
 Gap  = -0.00%
 Valor de la solucion  = 2748.371351
+***********
+
+Corriendo inst9.lp con B&B
+./Tp -f inst9.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 0.007425
+#nodos  = 0
+Gap  = -0.00%
+Valor de la solucion  = 1337.292364
+***********
+
+Corriendo inst9.lp con C&B Greedy
+./Tp -f inst9.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 237
+Total clique encontradas 0
+Tiempo  = 0.329773
+#nodos  = 0
+Gap  = -0.00%
+Valor de la solucion  = 923.283656
+***********
+
+Corriendo inst9.lp con C&B Clique
+./Tp -f inst9.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2852
+Total covers encontradas 0
+Total clique encontradas 14
+Tiempo  = 0.009531
+#nodos  = 0
+Gap  = -0.00%
+Valor de la solucion  = 1321.944489
+***********
+
+Corriendo inst9.lp con C&B Greedy y Clique
+./Tp -f inst9.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 2852
+Total covers encontradas 177
+Total clique encontradas 91
+Tiempo  = 0.310447
+#nodos  = 0
+Gap  = -0.00%
+Valor de la solucion  = 916.926981
+***********
