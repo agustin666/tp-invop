@@ -971,7 +971,3 @@ Gap  = 1.87%
 Valor de la solucion  = 2610.000000
 ***********
 
-Corriendo ./miplib2010-benchmark/reblock67.mps.gz con CPLEX 
-./Tp -f ./miplib2010-benchmark/reblock67.mps.gz -c >/dev/null
-***********
- USANDO EL VERDADERO PODER DE CPLEX 

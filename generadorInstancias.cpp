@@ -112,7 +112,7 @@ int main(){
   puts("Maximize");
   puts("Subject To");
   int i,j,k;
-  for(i=0;i<5;i++){
+  for(i=0;i<80;i++){
     while(generarclique()==-1);
     
     for(j=0;j<R;j++){

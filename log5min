@@ -1,0 +1,513 @@
+
+Corriendo inst1.lp con B&B
+./Tp -f inst1.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 0.027802
+#nodos  = 121
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con C&B Greedy
+./Tp -f inst1.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 17
+Total clique encontradas 0
+Tiempo  = 0.021483
+#nodos  = 9
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con C&B Clique
+./Tp -f inst1.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+Total covers encontradas 0
+Total clique encontradas 5
+Tiempo  = 0.013140
+#nodos  = 26
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con C&B Greedy y Clique
+./Tp -f inst1.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+Total covers encontradas 13
+Total clique encontradas 5
+Tiempo  = 0.021006
+#nodos  = 9
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con Greedy
+./Tp -f inst1.lp -t -G >/dev/null
+***********
+Total covers encontradas 22
+Total clique encontradas 0
+Tiempo  = 0.023149
+#nodos  = 11
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con Clique
+./Tp -f inst1.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+Total covers encontradas 0
+Total clique encontradas 5
+Tiempo  = 0.016922
+#nodos  = 26
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst1.lp con Greedy y Clique
+./Tp -f inst1.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 126
+Total covers encontradas 18
+Total clique encontradas 5
+Tiempo  = 0.025679
+#nodos  = 11
+Gap  = 0.00%
+Valor de la solucion  = 45.000000
+***********
+
+Corriendo inst2.lp con B&B
+./Tp -f inst2.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 0.353694
+#nodos  = 1713
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con C&B Greedy
+./Tp -f inst2.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 26
+Total clique encontradas 0
+Tiempo  = 0.036407
+#nodos  = 21
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con C&B Clique
+./Tp -f inst2.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+Total covers encontradas 0
+Total clique encontradas 9
+Tiempo  = 0.026072
+#nodos  = 64
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con C&B Greedy y Clique
+./Tp -f inst2.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+Total covers encontradas 18
+Total clique encontradas 9
+Tiempo  = 0.029260
+#nodos  = 5
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con Greedy
+./Tp -f inst2.lp -t -G >/dev/null
+***********
+Total covers encontradas 27
+Total clique encontradas 0
+Tiempo  = 0.035314
+#nodos  = 10
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con Clique
+./Tp -f inst2.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+Total covers encontradas 0
+Total clique encontradas 11
+Tiempo  = 0.039756
+#nodos  = 52
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst2.lp con Greedy y Clique
+./Tp -f inst2.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 290
+Total covers encontradas 18
+Total clique encontradas 9
+Tiempo  = 0.028618
+#nodos  = 5
+Gap  = 0.00%
+Valor de la solucion  = 90.000000
+***********
+
+Corriendo inst3.lp con B&B
+./Tp -f inst3.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 300.000741
+#nodos  = 1213819
+Gap  = 5.38%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con C&B Greedy
+./Tp -f inst3.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 44
+Total clique encontradas 0
+Tiempo  = 0.064371
+#nodos  = 21
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con C&B Clique
+./Tp -f inst3.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+Total covers encontradas 0
+Total clique encontradas 12
+Tiempo  = 22.280783
+#nodos  = 79305
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con C&B Greedy y Clique
+./Tp -f inst3.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+Total covers encontradas 28
+Total clique encontradas 19
+Tiempo  = 0.059024
+#nodos  = 13
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con Greedy
+./Tp -f inst3.lp -t -G >/dev/null
+***********
+Total covers encontradas 49
+Total clique encontradas 0
+Tiempo  = 0.064481
+#nodos  = 11
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con Clique
+./Tp -f inst3.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+Total covers encontradas 0
+Total clique encontradas 29
+Tiempo  = 0.787142
+#nodos  = 943
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst3.lp con Greedy y Clique
+./Tp -f inst3.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 626
+Total covers encontradas 32
+Total clique encontradas 19
+Tiempo  = 0.063986
+#nodos  = 7
+Gap  = 0.00%
+Valor de la solucion  = 171.000000
+***********
+
+Corriendo inst4.lp con B&B
+./Tp -f inst4.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 300.000949
+#nodos  = 692862
+Gap  = 36.19%
+Valor de la solucion  = 440.000000
+***********
+
+Corriendo inst4.lp con C&B Greedy
+./Tp -f inst4.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 124
+Total clique encontradas 0
+Tiempo  = 5.220792
+#nodos  = 7338
+Gap  = 0.00%
+Valor de la solucion  = 444.000000
+***********
+
+Corriendo inst4.lp con C&B Clique
+./Tp -f inst4.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+Total covers encontradas 0
+Total clique encontradas 79
+Tiempo  = 300.000783
+#nodos  = 689677
+Gap  = 12.13%
+Valor de la solucion  = 443.000000
+***********
+
+Corriendo inst4.lp con C&B Greedy y Clique
+./Tp -f inst4.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+Total covers encontradas 87
+Total clique encontradas 58
+Tiempo  = 0.610537
+#nodos  = 399
+Gap  = 0.00%
+Valor de la solucion  = 444.000000
+***********
+
+Corriendo inst4.lp con Greedy
+./Tp -f inst4.lp -t -G >/dev/null
+***********
+Total covers encontradas 141
+Total clique encontradas 0
+Tiempo  = 1.661979
+#nodos  = 1275
+Gap  = 0.00%
+Valor de la solucion  = 444.000000
+***********
+
+Corriendo inst4.lp con Clique
+./Tp -f inst4.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+Total covers encontradas 0
+Total clique encontradas 100
+Tiempo  = 300.001354
+#nodos  = 113809
+Gap  = 10.44%
+Valor de la solucion  = 444.000000
+***********
+
+Corriendo inst4.lp con Greedy y Clique
+./Tp -f inst4.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 1554
+Total covers encontradas 98
+Total clique encontradas 60
+Tiempo  = 0.676026
+#nodos  = 116
+Gap  = 0.00%
+Valor de la solucion  = 444.000000
+***********
+
+Corriendo inst5.lp con B&B
+./Tp -f inst5.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 300.001070
+#nodos  = 585865
+Gap  = 51.65%
+Valor de la solucion  = 576.000000
+***********
+
+Corriendo inst5.lp con C&B Greedy
+./Tp -f inst5.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 185
+Total clique encontradas 0
+Tiempo  = 63.334862
+#nodos  = 83018
+Gap  = 0.00%
+Valor de la solucion  = 586.000000
+***********
+
+Corriendo inst5.lp con C&B Clique
+./Tp -f inst5.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+Total covers encontradas 0
+Total clique encontradas 74
+Tiempo  = 300.000915
+#nodos  = 586457
+Gap  = 33.50%
+Valor de la solucion  = 581.000000
+***********
+
+Corriendo inst5.lp con C&B Greedy y Clique
+./Tp -f inst5.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 2060
+Total covers encontradas 131
+Total clique encontradas 78
+Tiempo  = 5.517918
+#nodos  = 6541
+Gap  = 0.00%
+Valor de la solucion  = 586.000000
+***********
+
+Corriendo inst5.lp con Greedy
+./Tp -f inst5.lp -t -G >/dev/null
+***********
+Total covers encontradas 211
+Total clique encontradas 0
+Tiempo  = 40.865870
+#nodos  = 29007
+Gap  = 0.00%
+Valor de la solucion  = 586.000000
+***********
+
+Corriendo inst5.lp con Clique
+./Tp -f inst5.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+Total covers encontradas 0
+Total clique encontradas 109
+Tiempo  = 300.002831
+#nodos  = 85259
+Gap  = 26.99%
+Valor de la solucion  = 581.000000
+***********
+
+Corriendo inst5.lp con Greedy y Clique
+./Tp -f inst5.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2062
+Total covers encontradas 151
+Total clique encontradas 79
+Tiempo  = 7.180119
+#nodos  = 1716
+Gap  = 0.00%
+Valor de la solucion  = 586.000000
+***********
+
+Corriendo inst6.lp con B&B
+./Tp -f inst6.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 300.168294
+#nodos  = 568285
+Gap  = 40.64%
+Valor de la solucion  = 609.000000
+***********
+
+Corriendo inst6.lp con C&B Greedy
+./Tp -f inst6.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 179
+Total clique encontradas 0
+Tiempo  = 21.317781
+#nodos  = 24488
+Gap  = 0.00%
+Valor de la solucion  = 619.000000
+***********
+
+Corriendo inst6.lp con C&B Clique
+./Tp -f inst6.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+Total covers encontradas 0
+Total clique encontradas 83
+Tiempo  = 300.001052
+#nodos  = 559907
+Gap  = 25.66%
+Valor de la solucion  = 616.000000
+***********
+
+Corriendo inst6.lp con C&B Greedy y Clique
+./Tp -f inst6.lp -t -X -K -G >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+Total covers encontradas 112
+Total clique encontradas 72
+Tiempo  = 1.037796
+#nodos  = 549
+Gap  = 0.00%
+Valor de la solucion  = 619.000000
+***********
+
+Corriendo inst6.lp con Greedy
+./Tp -f inst6.lp -t -G >/dev/null
+***********
+Total covers encontradas 208
+Total clique encontradas 0
+Tiempo  = 6.192890
+#nodos  = 3781
+Gap  = 0.00%
+Valor de la solucion  = 619.000000
+***********
+
+Corriendo inst6.lp con Clique
+./Tp -f inst6.lp -t -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+Total covers encontradas 0
+Total clique encontradas 142
+Tiempo  = 300.003578
+#nodos  = 79308
+Gap  = 17.46%
+Valor de la solucion  = 616.000000
+***********
+
+Corriendo inst6.lp con Greedy y Clique
+./Tp -f inst6.lp -t -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 2236
+Total covers encontradas 127
+Total clique encontradas 92
+Tiempo  = 1.004609
+#nodos  = 85
+Gap  = 0.00%
+Valor de la solucion  = 619.000000
+***********
+
+Corriendo inst7.lp con B&B
+./Tp -f inst7.lp -t  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 300.000878
+#nodos  = 523336
+Gap  = 45.99%
+Valor de la solucion  = 722.000000
+***********
+
+Corriendo inst7.lp con C&B Greedy
+./Tp -f inst7.lp -t -G -X >/dev/null
+***********
+Total covers encontradas 189
+Total clique encontradas 0
+Tiempo  = 254.014636
+#nodos  = 292520
+Gap  = 0.00%
+Valor de la solucion  = 734.000000
+***********
+
+Corriendo inst7.lp con C&B Clique
+./Tp -f inst7.lp -t -K -X >/dev/null
+***********
+Ejes en el grafo de conflicto 2496
