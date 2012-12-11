@@ -178,6 +178,10 @@ int main(int argc, char *argv[]){
   //Lectura de instancia
   CPXreadcopyprob(env,lp,archivo.c_str(), NULL);
   
+  // Nodo raiz
+  status = CPXsetintparam(env, CPX_PARAM_NODELIM, 0);
+	if(status)exit(-1);
+  
 
   // Copiamos el LP a memoria global
   cantVar = CPXgetnumcols(env,lp);
@@ -305,15 +309,15 @@ int main(int argc, char *argv[]){
   CPXgettime(env,&start);
   status = CPXmipopt(env,lp);
   CPXgettime(env,&end);
-  JOYA;
+  //~ JOYA;
   double tardo=end-start;
   
   double objval,gap;
   int nodecount=CPXgetnodecnt(env,lp);
-  status = CPXgetobjval (env, lp, &objval);
-  JOYA;
+  status = CPXgetbestobjval (env, lp, &objval);
+  //~ JOYA;
   status = CPXgetmiprelgap (env, lp, &gap);
-  JOYA;
+  //~ JOYA;	
   cerr << "Total covers encontradas " << totCortesGreedy << endl;
   cerr << "Total clique encontradas " << totCortesClique << endl;
   fprintf(stderr,"Tiempo  = %lf\n", tardo);
