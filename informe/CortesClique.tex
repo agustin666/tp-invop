@@ -9,15 +9,29 @@ Antes de explicar los cortes, vamos a comentar el grafo de nuestro problema.
 Las instancias a resolver fueron restringidas a instancias con todas las variables binarias.
 Existen grafos que sirven para representar este tipo de problemas y son los grafos de conflictos.
 Lo que nos dice el grafo de conflicto es si existen combinaciones de pares de nodos que no pueden ocurrir, es decir,
-dadas las restricciones de nuestro problema puede existir variables $x_1$ y $x_2$ tal que que si las dos estan en 1,
-el conjunto de restricciones se vuelve infactible. De la misma manera puede ocurrir que $x_1$ este en 1, y $x_2$ esta en 0 y que tambien
-as\'i el conjunto de resticciones sea infactible (si tenia por ejemplo $x_1+x_2>=2$).
+dadas las restricciones de nuestro problema puede existir variables $x_2$ y $x_3$ tal que que si las dos estan en 1,
+el conjunto de restricciones se vuelve infactible(como en la ecuaci\'on 1). De la misma manera puede ocurrir que $x_2$ este en 1, y $x_1$ esta en 0 y que tambien
+as\'i el conjunto de resticciones sea infactible (como en la ecuaci\'on 2).
 
+\begin{equation}
+-3 x_1 + 3 x_2 + 5 x_3 \leq 3
+\end{equation}
+\begin{equation}
+4 x_1 - 1 x_2 + 3 x_3 \geq 3
+\end{equation}
 
 Por lo tanto, existen combinaciones de pares de nodos que no pueden ocurrir en nuestro problema, cada combinaci\'on que no pueda ocurrir
 es un eje en nuestro grafo de conflictos. Para representar este grafo, tenemos un conjunto $\mathcal{V}$ dos nodos por cada variable, $x_i$
 representando la variable $x_i$ en 1, y $\tilde{x}_i$ para la variable $x_i$ en 0. Por lo tanto, nuestro conjunto $\mathcal{E}$ de ejes son los pares de 
-nodos que no pueden ocurrir en nuestro problema.
+nodos que no pueden ocurrir en nuestro problema, entre ellos, los que conectan a $x_i$ con $\tilde{x}_i$ como muestra la FIGURA1.
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics{grafoconflicto}
+\end{center}
+\label{Grafo de conflictos del las restricciones REF}
+\end{figure}
 
 Una vez que tenemos armado el grafo, se puede ver que las soluciones factibles, son en realidad conjuntos independientes en nuestro grafo
 (ie: no existen dos nodos conectados con un eje, porque estan conectas las que hacen problema infactible). Por lo tanto cada eje representa
