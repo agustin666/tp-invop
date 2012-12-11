@@ -975,3 +975,32 @@ Corriendo ./miplib2010-benchmark/reblock67.mps.gz con CPLEX
 ./Tp -f ./miplib2010-benchmark/reblock67.mps.gz -c >/dev/null
 ***********
  USANDO EL VERDADERO PODER DE CPLEX 
+
+Corriendo ./miplib2010-benchmark/reblock67.mps.gz con CPLEX 
+./Tp -t -f ./miplib2010-benchmark/reblock67.mps.gz -c >/dev/null
+***********
+ USANDO EL VERDADERO PODER DE CPLEX 
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 6400.094734
+#nodos  = 109200
+Gap  = 0.53%
+Valor de la solucion  = -34627142.075675
+***********
+
+Corriendo ./miplib2010-benchmark/reblock67.mps.gz con Greedy y Cover 
+./Tp -t -f ./miplib2010-benchmark/reblock67.mps.gz -G -K >/dev/null
+***********
+Ejes en el grafo de conflicto 3086
+***********
+
+Corriendo ./miplib2010-benchmark/reblock67.mps.gz con B&B 
+./Tp -t -f ./miplib2010-benchmark/reblock67.mps.gz  >/dev/null
+***********
+Total covers encontradas 0
+Total clique encontradas 0
+Tiempo  = 6400.002073
+#nodos  = 1219233
+Gap  = 1.44%
+Valor de la solucion  = -34260434.557020
+***********

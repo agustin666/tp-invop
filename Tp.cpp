@@ -210,9 +210,9 @@ int main(int argc, char *argv[]){
   memset(last,-1,2*cantVar*sizeof(int));
   
   if(CORTECLIQUE){
-    for(int i=0;i<cantVar;++i){
+    for(int i=0;i<333;++i){
       add_edge(i*2,i*2+1);          // i y ~i son conflicto
-      for(int j=i+1;j<cantVar;++j){ 
+      for(int j=i+1;j<333;++j){ 
         bool serompe;
         for(int a=0;a<4;++a){
           int probi=a&1;      // si probx es 1 entonces uso la variable original si es 0 uso al complemento
@@ -284,7 +284,7 @@ int main(int argc, char *argv[]){
   }
   //Para el TP usamos limite de tiempo
   if(XTIEMPO){
-    status = CPXsetdblparam(env, CPX_PARAM_TILIM, 1200);
+    status = CPXsetdblparam(env, CPX_PARAM_TILIM, 6400);
     JOYA;
   }
   
