@@ -1,14 +1,40 @@
 \section{Conclusiones}
 
-- es bueno fortalecer el nodo raiz
 
-- aguante los cortes
+Luego del trabajo realizado y de los resultados obtenidos y analizados, se desprenden varias conclusiones generales sobre lo estudiado
+
+\medskip
+\paragraph{Cortes generales}
+La conclusi\'on m\'as evidente de todo el trabajo, pero que no por eso se puede dejar de mencionar, es el hecho de la gran utilidad que se le encontro a los cortes implementados.
+
+Trabajando con instancias peque\~nas se observ\'o que si bien el algoritmo de Branch-and-Bound es teoricamente correcto, resulta muy lento y necesita explorar una cantidad altisima de nodos para, no solo tratar de llegar al \'optimo, si no tambi\'en lograr el certificado de optimilidad.
+
+La inclusi\'on de los cortes generales hizo que sin explotar la estructura particular de cada problema, muchas de las instancias propuestas se pudieran resolver en el tiempo l\'imite fijado.
+
+\medskip
+\paragraph{Cut-and-Branch y Branch-and-Cut}
+
+Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una gran diferencia con el Branch-and-Bound, al solo efectivizar los cortes en el nodo ra\'iz. Se encontr\'o que en la mayor\'ia de los casos estudiados el Cut-and-Branch no solo mejora ampliamente los tiempos de ejecuci\'on del Branch-and-Bound, si no que tambi\'en mejora, en un nivel mucho menor, los tiempos de ejecuci\'on del Branch-and-Cut. Por lo que parece suceder que el problema con muchas de las instancias es que la formulaci\'on inicial es muy debil cuando se compara el conjunto de puntos enteros que se quiere analizar y la relajaci\'on lineal obtenida por la formulaci\'on.
 
 
-- tal vez a las clique les falta mejorar la implementacion (la otra separacion de clique)
+\medskip
+\paragraph{Implementaci\'on}
+
+Si bien el desarrollo te\'orico de un corte general es un punto m\'as que necesario, para poder demostrar que el corte sirve como tal y para poder encarar el problema de separaci\'on; la implementaci\'on pr\'actica de los cortes es un tema para nada menor. 
+
+El hecho de que las desigualdades cover se hayan comportado mejor de las clique en estas instancias, no indica que esto vaya a suceder siempre. Un posible problema en las desigualdades clique es que la implementaci\'on, tanto a la hora de armar el grafo de conflicto, como al buscar la clique, puede haber sido demasiado trivial, y se necesiten mejores algoritmos para resolver los dos problemas centrales de estas desigualdades.
+
+Otras cosas que han sido notadas durante la implementaci\'on y la experimentaci\'on, es como fluctuaron los tiempos de ejecuci\'on no por cuestiones algor\'itmicas, sino por cuestiones meramente de codificaci\'on. El ejemplo m\'as claro se di\'o en la elecci\'on del momento para asignar y liberar memoria din\'amica al algoritmo, un ejemplo que tiene el agravante de que no puede ser controlado en cualquier lenguaje de programaci\'on que se utilice.
+
+\medskip
+\paragraph{MIPLIB}
+Si bien la idea original del trabajo era realizar las pruebas sobre instancias de la MIPLIB, no se logr\'o trabajar con estas ya que los tiempos de ejecuci\'on para resolver las instancias m\'as peque\~nas eran muy elevados, y tambi\'en resultaba complicado encontrar instancias donde se pudiese observar la inclusi\'on de los cortes clique.
+
+Este problema puede ser generado por el hecho de que las dos familias de desigualdades no sean lo suficientemente fuertes como para poder resolver instancias grandes, como as\'i tambi\'en puede haber sido generado por implementaciones muy ingenuas de los algoritmos de separaci\'on. Algo que si es importante destacar, es que al deshabilitar todos las ayudas de CPLEX, dejando solamente el manejo del arbol, no hay ning\'un tipo de b\'usqueda de soluciones factibles, a menos que se consiga una al resolver la relajaci\'on de un nodo. Es decir, la inclusi\'on de cortes generales ataca un solo lado del problema, solamente busca ajustar las cotas duales, pero el no tener ning\'un abordaje por el lado primal puede ser uno de los principales motivos para que los tiempos de ejecuci\'on sean elevados.
 
 
+\paragraph{CPLEX}
 
-- cplex igual la descoce
 
---fallamos con miplib
+Otra de las conclusiones obvias pero que no dejan de ser notables, es el gran poder que tiene CPLEX como software de resoluci\'on general. CPLEX tiene muchisimos a\~nos de desarrollo, y presenta muchisimos cortes y heur\'isticas con implementaciones muy evolucionadas. Todas las instancias que fueron resueltas en este trabajo, CPLEX las resuelve casi instantaneamente si se le deja usar todas las ayudas que vienen incluidas. Es notorio que se logre hacer tanta diferencia en la resoluci\'on de los problemas, sin tener ning\'un tipo de informaci\'on sobre la estructura del mismo como para poder entender mejor el conjunto de puntos con el que se est\'a trabajando.
+
