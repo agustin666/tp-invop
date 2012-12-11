@@ -110,19 +110,17 @@ Luego se observa que la inclusi\'on de las desigualdades clique es beneficiosa p
 
 
 
-Por otro lado, observando los cortes cover, se puede buen un gran incremento en la calidad del algoritmo en cuanto al tiempo de ejecuci\'on se refiere. La sola inclusi\'on de las desigualdades cover en el nodo ra\'iz ya hace que la mayor\'ia de las instancias sean resueltas en el tiempo fijado. Nuevamente, al igual que en las desigualdad Clique, se puede observar que el m\'etodo de Branch-and-Cut es notoriamente superior a incluir cortes solo en el primer nodo.
+Por otro lado, observando los cortes cover, se puede visualizar un gran incremento en la calidad del algoritmo en cuanto al tiempo de ejecuci\'on se refiere. La sola inclusi\'on de las desigualdades cover en el nodo ra\'iz ya hace que la mayor\'ia de las instancias sean resueltas en el tiempo fijado. Nuevamente, al igual que en las desigualdad Clique, se puede observar que el m\'etodo de Branch-and-Cut es notoriamente superior a incluir cortes solo en el primer nodo.
 
 
 
-Luego, se observan los mejores resultados cuando se combinan los dos cortes propuestos.
+Luego, se observan los mejores resultados cuando se combinan los dos cortes propuestos. Incluir los dos cortes propuestos resulta en mejoras considerables del tiempo de ejecuci\'on en todas las instancias presentadas y por grandes m\'argenes. Un resultado interesante cuando se combinan los cortes es que en casi todas las instancias ahora la mejor combinaci\'on resulta a ser el Cut-and-Branch en vez del Branch-and-Cut, es decir que resulta m\'as conveniente fortalecer el nodo ra\'iz y luego lanzar un Branch-and-Bound sobre el problema fortalecido, que ir buscando cortes en todos los nodos del arbol recorrido.
 
+Una posible explicaci\'on para esto proviene del hecho de que cuando solo se tienen en cuenta dos variables, una desigualdad clique es tambi\'en una desigualdad cover y por lo tanto se utiliza mucho tiempo ejecutando los algoritmos de separaci\'on en cada uno de los nodos, muchas veces encontrando la misma desigualdad violada.
 
-al juntarlos fiesta en todos los casos
+\bigskip
 
-sin embargo ahi gana cyb, auguramos por la cantidad de desigualdades que son cover y clique a la vez
-
-
-
+A continuaci\'on se observan la cantidad de nodos procesados por cada m\'etodo en cada instancia.
 
 
 
@@ -165,16 +163,27 @@ Inst12 & 628987 & 519323 & 649291 & 547822 & 222469 & 72630 & 62321\\
 \end{table}
 
 
-clique solo en cyb, en el orden de bb, pero estan cortando por tiempo
+Al igual que en los tiempos de ejecuci\'on, la anterior tabla muestra tendencias marcadas que se condicen en todas las instancias.
 
-byc de clique tambien corta por tiempo pero tiene razonablemente menos nodos porque se pone mas esfuerzo en cada nodo bla
+En primer lugar se nota que este caso la cantidad de nodos que procesan el Branch-and-Bound y la versi\'on clique en Cut-and-Branch estan en el mismo orden, esto se debe a que en el segundo caso solo se est\'a poniendo un poco m\'as de esfuerzo en el nodo ra\'iz pero no alcanza para resolver las instancias en los tiempos dados por lo que en ambos casos se est\'a cortado la ejecuci\'on por tiempo l\'imite y ambas combinaciones terminan procesando una cantidad similar de nodos.
 
-cover en cyb anda bastante mejor
+Luego, se puede ver que si bien el Branch-and-Cut con cortes clique tambi\'en cortaba por tiempo, se observa que, logicamente, la cantidad de nodos procesados en este es bastante menor, porque se est\'a poniendo m\'as esfuerzo computacional en cada nodo para encontrar mejores cortes que eviten menos \emph{brancheo} del arbol de resoluci\'on.
 
-y nuevamente en byc mejor
 
-nuevamente juntar las dos opciones es lo mejro, pero ahora a pesar de que byc tardaba mas en general el arbol suele ser mas chico
 
+Nuevamente las desigualdades cover por si solas ya son una muy buena mejora a la opci\'on sin cortes, ya solo en Cut-and-Branch se puede observar como casi todas las instancias se resuelven hasta la optimalidad explorando una cantidad de nodos muchisimo menor a las combinaciones analizadas recientemente. Al igual que en las desigualdad clique, se puede observar que la cantidad de nodos necesitados por el Branch-and-Cut para llegar hasta la optimalidad es mucho menor a solamente fortalecer la formulaci\'on en el nodo ra\'iz.
+
+
+Por \'ultimo, se observa nuevamente como la combinaci\'on de las dos familias de cortes muestran una mejor\'ia notable. La cantidad de nodos procesados por las combinaciones de los cortes esta en menos del 10\% de los nodos utilizados por el resto de los casos en la mayor\'ia de las instancias, excepto por las instancias muy peque\~nas que se resuelven casi instantaneamente.
+
+Si bien en la tabla anterior se pudo apreciar que la mejor combinaci\'on en cuanto a tiempos de ejecuci\'on resulto ser el Cut-and-Branch con las dos familias de cortes, es l\'ogico que ahora esa tendencia sea la inversa en cuanto a la cantidad de nodos se refiere. La cantidad de nodos explorados por el algoritmo de Branch-and-Cut es casi siempre menor a los explorados por el Cut-and-Branch. Nuevamente esta tendencia se explica por el esfuerzo realizado en cada nodo para obtener mejores cotas duales.
+
+\bigskip
+
+
+A continuaci\'on, se presentan las cotas duales que se cuentan al salir del nodo ra\'iz en cada instancia para cada una de las combinaciones procesadas.
+
+Dado que solo se realiza el estudio de cortes sobre el nodo ra\'iz, no tiene sentido hacer la distinci\'on entre Cut-and-Branch y Branch-and-Cut
 
 
 
@@ -214,4 +223,17 @@ Inst12 & 4016.096160 & 2793.529570  & 3911.505935 & 2748.371351  \\
 \end{table}
 
 
-4,2,3,1
+Dado que las instancias utilizadas son todas problemas de optimizaci\'on, lo deseable ser\'ia obtener valores lo m\'as peque\~nos posibles para las cotas duales.
+
+En esta tabla la tendencia que se ven\'ia dando con los anteriores resultados es irrefutable, en absolutamente todas las instancias se puede ver que el Branch-and-Bound obtiene las peores cotas duales, lo cual es l\'ogico porque todos los dem\'as m\'etodos comienzan con esta soluci\'on como punto de partida. 
+
+Luego se encuentra la inclusi\'on de las desigualdades clique que en todas las instancias mejora las cotas del Branch-and-Bound, pero los resultados obtenidos se encuentran en el mismo orden de magnitud.
+
+Ya si con una diferencia notoria se encuentra la utilizaci\'on de la desigualdades cover, que en los casos m\'as interesantes logran cotas que est\'an en el orden de los dos tercios de las conseguidas por las desigualdades clique.
+
+Por \'ultimo, la mejor columna en todos los casos es la perteneciente a la combinaci\'on de las dos familias, reforzando una vez m\'as el hecho de que es importante la inclusi\'on de este tipo de cortes generales. Si bien esta es la mejor columna de las 4, cabe notar que no muestra mucha diferencia con los resultados arrojados por las desigualdades cover.
+
+
+\bigskip
+
+

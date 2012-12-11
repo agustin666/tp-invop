@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  10 DEC 2012 18:46
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.16)  11 DEC 2012 16:43
 entering extended mode
  %&-line parsing enabled.
 **tp.tex
@@ -581,48 +581,50 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--17
 [5] [6]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
 ine 125.
- [7]) [8] (./CortesClique.tex) [9] (./Resultados.tex
+ [7]) [8] (./CortesClique.tex
+<grafoconflicto.png, id=139, 193.19704pt x 161.71307pt>
+File: grafoconflicto.png Graphic file (type png)
+
+<use grafoconflicto.png> [9 <./grafoconflicto.png>]) [10] (./Resultados.tex
 Overfull \hbox (22.08096pt too wide) in paragraph at lines 71--100
 [][]
  []
 
-[10pdfTeX warning (ext4): destination with the same identifier (name{table.1}) 
+[11pdfTeX warning (ext4): destination with the same identifier (name{table.1}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.102 
       ]
-Overfull \hbox (59.8032pt too wide) in paragraph at lines 128--160
+Overfull \hbox (59.8032pt too wide) in paragraph at lines 129--161
 [][]
  []
 
-[11pdfTeX warning (ext4): destination with the same identifier (name{table.2}) 
+[12pdfTeX warning (ext4): destination with the same identifier (name{table.2}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.167 b
-       yc de clique tambien corta por tiempo pero tiene razonablemente menos...
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
- been already used, duplicate ignored
+l.164 
+      ] [13pdfTeX warning (ext4): destination with the same identifier (name{ta
+ble.3}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.167 b
-       yc de clique tambien corta por tiempo pero tiene razonablemente menos...
-]) [12pdfTeX warning (ext4): destination with the same identifier (name{table.4
-}) has been already used, duplicate ignored
+l.224 
+      ]) [14pdfTeX warning (ext4): destination with the same identifier (name{t
+able.4}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.39 \newpage
-             ] (./Conclusiones.tex) [13] (./tp.aux) ) 
+             ] (./Conclusiones.tex) [15] (./tp.aux) ) 
 Here is how much of TeX's memory you used:
- 12365 strings out of 495061
- 203659 string characters out of 1182621
- 305910 words of memory out of 3000000
- 15218 multiletter control sequences out of 15000+50000
+ 12382 strings out of 495061
+ 203933 string characters out of 1182621
+ 301952 words of memory out of 3000000
+ 15228 multiletter control sequences out of 15000+50000
  6879 words of font info for 25 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  54i,14n,74p,701b,634s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -640,9 +642,9 @@ bx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
 usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/te
 xmf-texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on tp.pdf (13 pages, 584482 bytes).
+Output written on tp.pdf (15 pages, 598117 bytes).
 PDF statistics:
- 224 PDF objects out of 1000 (max. 8388607)
- 48 named destinations out of 1000 (max. 500000)
- 127 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 239 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 500000)
+ 132 words of extra memory for PDF output out of 10000 (max. 10000000)
 
