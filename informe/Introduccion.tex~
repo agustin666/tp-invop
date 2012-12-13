@@ -38,10 +38,3 @@ Por \'ultimo se buscar\'a realizar una comparaci\'on entre diferentes m\'etodos 
 \item Branch-and-Cut: Mezcla el arbol de Branch-and-Bound manejado por CPLEX con los cortes implementados en el trabajo. Los cortes se aplican en cada nodo del arbol para cortar soluciones fraccionarias \'optimas.
 \end{itemize}
 
-
-\begin{itemize}
-\item 
-\end{itemize}
-
-
-%- comparar contra branch and bound y contra cplex (b&c, c&b, b&b)

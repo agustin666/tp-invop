@@ -61,7 +61,7 @@ Inst12 & 1497 & 717 & 59 & 9104\\
 
 
 
-
+\newpage
 A continuaci\'on, se presentan los tiempos de ejecuci\'on para cada una de las instancias en cada una de las combinaciones mencionadas. Para cada corrida se fij\'o un tiempo l\'imite de 20 minutos. En el caso de que se alcance el tiempo m\'aximo establecido, lo que se reporta es el gap alcanzando.
 
 
@@ -118,8 +118,8 @@ Luego, se observan los mejores resultados cuando se combinan los dos cortes prop
 
 Una posible explicaci\'on para esto proviene del hecho de que cuando solo se tienen en cuenta dos variables, una desigualdad clique es tambi\'en una desigualdad cover y por lo tanto se utiliza mucho tiempo ejecutando los algoritmos de separaci\'on en cada uno de los nodos, muchas veces encontrando la misma desigualdad violada.
 
-\bigskip
 
+\newpage
 A continuaci\'on se observan la cantidad de nodos procesados por cada m\'etodo en cada instancia.
 
 
@@ -165,7 +165,7 @@ Inst12 & 628987 & 519323 & 649291 & 547822 & 222469 & 72630 & 62321\\
 
 Al igual que en los tiempos de ejecuci\'on, la anterior tabla muestra tendencias marcadas que se condicen en todas las instancias.
 
-En primer lugar se nota que este caso la cantidad de nodos que procesan el Branch-and-Bound y la versi\'on clique en Cut-and-Branch estan en el mismo orden, esto se debe a que en el segundo caso solo se est\'a poniendo un poco m\'as de esfuerzo en el nodo ra\'iz pero no alcanza para resolver las instancias en los tiempos dados por lo que en ambos casos se est\'a cortado la ejecuci\'on por tiempo l\'imite y ambas combinaciones terminan procesando una cantidad similar de nodos.
+En primer lugar se nota que este caso la cantidad de nodos que procesan el Branch-and-Bound y la versi\'on clique en Cut-and-Branch est\'an en el mismo orden, esto se debe a que en el segundo caso solo se est\'a poniendo un poco m\'as de esfuerzo en el nodo ra\'iz pero no alcanza para resolver las instancias en los tiempos dados por lo que en ambos casos se est\'a cortado la ejecuci\'on por tiempo l\'imite y ambas combinaciones terminan procesando una cantidad similar de nodos.
 
 Luego, se puede ver que si bien el Branch-and-Cut con cortes clique tambi\'en cortaba por tiempo, se observa que, logicamente, la cantidad de nodos procesados en este es bastante menor, porque se est\'a poniendo m\'as esfuerzo computacional en cada nodo para encontrar mejores cortes que eviten menos \emph{brancheo} del arbol de resoluci\'on.
 
@@ -237,3 +237,4 @@ Por \'ultimo, la mejor columna en todos los casos es la perteneciente a la combi
 \bigskip
 
 
+Como an\'alisis general, se observa que la inclusi\'on de las dos familias de cortes generales resulto beneficioso en todos los aspectos presentados, mostrando grandes diferencias con el m\'etodo que se contaba originalmente, el Branch-and-Bound.

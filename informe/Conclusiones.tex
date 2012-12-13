@@ -14,7 +14,7 @@ La inclusi\'on de los cortes generales hizo que sin explotar la estructura parti
 \medskip
 \paragraph{Cut-and-Branch y Branch-and-Cut}
 
-Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una gran diferencia con el Branch-and-Bound, al solo efectivizar los cortes en el nodo ra\'iz. Se encontr\'o que en la mayor\'ia de los casos estudiados el Cut-and-Branch no solo mejora ampliamente los tiempos de ejecuci\'on del Branch-and-Bound, si no que tambi\'en mejora, en un nivel mucho menor, los tiempos de ejecuci\'on del Branch-and-Cut. Por lo que parece suceder que el problema con muchas de las instancias es que la formulaci\'on inicial es muy debil cuando se compara el conjunto de puntos enteros que se quiere analizar y la relajaci\'on lineal obtenida por la formulaci\'on.
+Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una gran diferencia con el Branch-and-Bound, al solo efectivizar los cortes en el nodo ra\'iz. Se encontr\'o que en la mayor\'ia de los casos estudiados el Cut-and-Branch no solo mejora ampliamente los tiempos de ejecuci\'on del Branch-and-Bound, si no que tambi\'en mejora, en un nivel mucho menor, los tiempos de ejecuci\'on del Branch-and-Cut. Por lo que parece suceder que el problema con muchas de las instancias es que la formulaci\'on inicial es muy d\'ebil cuando se compara el conjunto de puntos enteros que se quiere analizar y la relajaci\'on lineal obtenida por la formulaci\'on.
 
 
 \medskip
@@ -22,7 +22,7 @@ Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una g
 
 Si bien el desarrollo te\'orico de un corte general es un punto m\'as que necesario, para poder demostrar que el corte sirve como tal y para poder encarar el problema de separaci\'on; la implementaci\'on pr\'actica de los cortes es un tema para nada menor. 
 
-El hecho de que las desigualdades cover se hayan comportado mejor de las clique en estas instancias, no indica que esto vaya a suceder siempre. Un posible problema en las desigualdades clique es que la implementaci\'on, tanto a la hora de armar el grafo de conflicto, como al buscar la clique, puede haber sido demasiado trivial, y se necesiten mejores algoritmos para resolver los dos problemas centrales de estas desigualdades.
+El hecho de que las desigualdades cover se hayan comportado mejor que las clique en estas instancias, no indica que esto vaya a suceder siempre. Un posible problema en las desigualdades clique es que la implementaci\'on, tanto a la hora de armar el grafo de conflicto, como al buscar la clique, puede haber sido demasiado trivial, y se necesiten mejores algoritmos para resolver los dos problemas centrales de estas desigualdades.
 
 Otras cosas que han sido notadas durante la implementaci\'on y la experimentaci\'on, es como fluctuaron los tiempos de ejecuci\'on no por cuestiones algor\'itmicas, sino por cuestiones meramente de codificaci\'on. El ejemplo m\'as claro se di\'o en la elecci\'on del momento para asignar y liberar memoria din\'amica al algoritmo, un ejemplo que tiene el agravante de que no puede ser controlado en cualquier lenguaje de programaci\'on que se utilice.
 

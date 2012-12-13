@@ -14,7 +14,7 @@ La inclusi\'on de los cortes generales hizo que sin explotar la estructura parti
 \medskip
 \paragraph{Cut-and-Branch y Branch-and-Cut}
 
-Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una gran diferencia con el Branch-and-Bound, al solo efectivizar los cortes en el nodo ra\'iz. Se encontr\'o que en la mayor\'ia de los casos estudiados el Cut-and-Branch no solo mejora ampliamente los tiempos de ejecuci\'on del Branch-and-Bound, si no que tambi\'en mejora, en un nivel mucho menor, los tiempos de ejecuci\'on del Branch-and-Cut. Por lo que parece suceder que el problema con muchas de las instancias es que la formulaci\'on inicial es muy debil cuando se compara el conjunto de puntos enteros que se quiere analizar y la relajaci\'on lineal obtenida por la formulaci\'on.
+Si bien de antemano se podr\'ia pensar que el Cut-and-Branch no marcar\'ia una gran diferencia con el Branch-and-Bound, al solo efectivizar los cortes en el nodo ra\'iz. Se encontr\'o que en la mayor\'ia de los casos estudiados el Cut-and-Branch no solo mejora ampliamente los tiempos de ejecuci\'on del Branch-and-Bound, si no que tambi\'en mejora, en un nivel mucho menor, los tiempos de ejecuci\'on del Branch-and-Cut. Por lo que parece suceder que el problema con muchas de las instancias es que la formulaci\'on inicial es muy d\'ebil cuando se compara el conjunto de puntos enteros que se quiere analizar y la relajaci\'on lineal obtenida por la formulaci\'on.
 
 
 \medskip
@@ -36,5 +36,5 @@ Este problema puede ser generado por el hecho de que las dos familias de desigua
 \paragraph{CPLEX}
 
 
-Otra de las conclusiones obvias pero que no dejan de ser notables, es el gran poder que tiene CPLEX como software de resoluci\'on general. CPLEX tiene muchisimos a\~nos de desarrollo, y presenta muchisimos cortes y heur\'isticas con implementaciones muy evolucionadas. Todas las instancias que fueron resueltas en este trabajo, CPLEX las resuelve casi instantaneamente si se le deja usar todas las ayudas que vienen incluidas. Es notorio que se logre hacer tanta diferencia en la resoluci\'on de los problemas, sin tener ning\'un tipo de informaci\'on sobre la estructura del mismo como para poder entender mejor el conjunto de puntos con el que se esta trabjando.
+Otra de las conclusiones obvias pero que no dejan de ser notables, es el gran poder que tiene CPLEX como software de resoluci\'on general. CPLEX tiene muchisimos a\~nos de desarrollo, y presenta muchisimos cortes y heur\'isticas con implementaciones muy evolucionadas. Todas las instancias que fueron resueltas en este trabajo, CPLEX las resuelve casi instantaneamente si se le deja usar todas las ayudas que vienen incluidas. Es notorio que se logre hacer tanta diferencia en la resoluci\'on de los problemas, sin tener ning\'un tipo de informaci\'on sobre la estructura del mismo como para poder entender mejor el conjunto de puntos con el que se est\'a trabajando.
 

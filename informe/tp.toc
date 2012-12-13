@@ -9,15 +9,15 @@
 \contentsline {subsection}{\numberline {2.2}Algoritmo de separaci\'on}{5}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Greedy}{6}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Programaci\'on Din\'amica}{7}{subsubsection.2.2.2}
-\contentsline {subsection}{\numberline {2.3}Lifteo}{8}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.3}Lifteo}{7}{subsection.2.3}
 \contentsline {section}{\numberline {3}Cortes Clique}{9}{section.3}
 \contentsline {subsection}{\numberline {3.1}Formulaci\'on}{9}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Construcci\'on del grafo}{10}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Algoritmo de separaci\'on}{10}{subsection.3.3}
 \contentsline {section}{\numberline {4}Resultados}{12}{section.4}
 \contentsline {section}{\numberline {5}Conclusiones}{16}{section.5}
-\contentsline {paragraph}{Cortes generales}{16}{section*.9}
-\contentsline {paragraph}{Cut-and-Branch y Branch-and-Cut}{16}{section*.10}
-\contentsline {paragraph}{Implementaci\'on}{16}{section*.11}
-\contentsline {paragraph}{MIPLIB}{16}{section*.12}
-\contentsline {paragraph}{CPLEX}{17}{section*.13}
+\contentsline {paragraph}{Cortes generales}{16}{section*.6}
+\contentsline {paragraph}{Cut-and-Branch y Branch-and-Cut}{16}{section*.7}
+\contentsline {paragraph}{Implementaci\'on}{16}{section*.8}
+\contentsline {paragraph}{MIPLIB}{16}{section*.9}
+\contentsline {paragraph}{CPLEX}{17}{section*.10}

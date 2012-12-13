@@ -34,7 +34,7 @@ Por \'ultimo se buscar\'a realizar una comparaci\'on entre diferentes m\'etodos 
 
 \begin{itemize}
 \item Branch-and-Bound: Resoluci\'on autom\'atica de CPLEX, quitando todo el preprocesamiento posible y la capacidad de generar cortes, para que la resoluci\'on sea simplemente por el arbol de Branch-and-Bound.
-\item Cut-and-Brach: Es un caso particular de aplicaci\'on de cortes, en donde los mismos solo se aplican al nodo ra\'iz del arbol. La idea de esto es poner bastante esfuerzo computacional es fortalecer el problema original de la mejor manera que se pueda, para luego lanzar un Branch-and-Bound cl\'asico, pero que deber\'ia tomar menos tiempo al trabajar sobre una formulaci\'on m\'as fuerte.
+\item Cut-and-Brach: Es un caso particular de aplicaci\'on de cortes, en donde los mismos solo se aplican al nodo ra\'iz del arbol. La idea de esto es poner bastante esfuerzo computacional en fortalecer el problema original de la mejor manera que se pueda, para luego lanzar un Branch-and-Bound cl\'asico, pero que deber\'ia tomar menos tiempo al trabajar sobre una formulaci\'on m\'as fuerte.
 \item Branch-and-Cut: Mezcla el arbol de Branch-and-Bound manejado por CPLEX con los cortes implementados en el trabajo. Los cortes se aplican en cada nodo del arbol para cortar soluciones fraccionarias \'optimas.
 \end{itemize}
 

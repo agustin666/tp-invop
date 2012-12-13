@@ -165,7 +165,7 @@ Inst12 & 628987 & 519323 & 649291 & 547822 & 222469 & 72630 & 62321\\
 
 Al igual que en los tiempos de ejecuci\'on, la anterior tabla muestra tendencias marcadas que se condicen en todas las instancias.
 
-En primer lugar se nota que este caso la cantidad de nodos que procesan el Branch-and-Bound y la versi\'on clique en Cut-and-Branch estan en el mismo orden, esto se debe a que en el segundo caso solo se est\'a poniendo un poco m\'as de esfuerzo en el nodo ra\'iz pero no alcanza para resolver las instancias en los tiempos dados por lo que en ambos casos se est\'a cortado la ejecuci\'on por tiempo l\'imite y ambas combinaciones terminan procesando una cantidad similar de nodos.
+En primer lugar se nota que este caso la cantidad de nodos que procesan el Branch-and-Bound y la versi\'on clique en Cut-and-Branch est\'an en el mismo orden, esto se debe a que en el segundo caso solo se est\'a poniendo un poco m\'as de esfuerzo en el nodo ra\'iz pero no alcanza para resolver las instancias en los tiempos dados por lo que en ambos casos se est\'a cortado la ejecuci\'on por tiempo l\'imite y ambas combinaciones terminan procesando una cantidad similar de nodos.
 
 Luego, se puede ver que si bien el Branch-and-Cut con cortes clique tambi\'en cortaba por tiempo, se observa que, logicamente, la cantidad de nodos procesados en este es bastante menor, porque se est\'a poniendo m\'as esfuerzo computacional en cada nodo para encontrar mejores cortes que eviten menos \emph{brancheo} del arbol de resoluci\'on.
 
@@ -223,7 +223,7 @@ Inst12 & 4016.096160 & 2793.529570  & 3911.505935 & 2748.371351  \\
 \end{table}
 
 
-Dado que las instancias utilizadas son todas problemas de optimizaci\'on, lo deseable ser\'ia obtener valores lo m\'as peque\~nos posibles para las cotas duales.
+Dado que las instancias utilizadas son todas problemas de maximizaci\'on, lo deseable ser\'ia obtener valores lo m\'as peque\~nos posibles para las cotas duales.
 
 En esta tabla la tendencia que se ven\'ia dando con los anteriores resultados es irrefutable, en absolutamente todas las instancias se puede ver que el Branch-and-Bound obtiene las peores cotas duales, lo cual es l\'ogico porque todos los dem\'as m\'etodos comienzan con esta soluci\'on como punto de partida. 
 
