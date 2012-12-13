@@ -18,7 +18,7 @@ Para cada una de estas instancias se resolvi\'o reportar y analizar los tiempos 
 
 La idea original del trabajo era realizar las corridas pertinentes sobre instancias de la MIPLIB, pero dado el tama\~no de las instancias se decidi\'o generar instancias propias con tama\~nos manejables por los algoritmos utilizados, con el objetivo de poder visualizar en un tiempo razonable las diferencias entre las diferentes opciones.
 
-Todas las corridas se realizaron sobre una CPU INTEL CORE 2 DUO 2.8 GHZ 2GB RAM, utilizando la versi\'on 12.4 de CPLEX.
+Todas las corridas se realizaron sobre una CPU INTEL CORE 2 DUO 2 GHZ 2GB RAM, utilizando la versi\'on 12.4 de CPLEX.
 
 
 En la siguiente tabla se muestra la informaci\'on de las instancias utilizadas, mostrando la cantidad de columnas del problema, la cantidad de filas, la cantidad de desigualdades que ya son cover (dado que por como estan generadas las instancias todas son desigualdades mochila); y por \'ultimo se encuentra la cantidad de ejes presentes en el grafo de conflicto utilizado para las desigualdades clique.
@@ -178,8 +178,7 @@ Por \'ultimo, se observa nuevamente como la combinaci\'on de las dos familias de
 
 Si bien en la tabla anterior se pudo apreciar que la mejor combinaci\'on en cuanto a tiempos de ejecuci\'on resulto ser el Cut-and-Branch con las dos familias de cortes, es l\'ogico que ahora esa tendencia sea la inversa en cuanto a la cantidad de nodos se refiere. La cantidad de nodos explorados por el algoritmo de Branch-and-Cut es casi siempre menor a los explorados por el Cut-and-Branch. Nuevamente esta tendencia se explica por el esfuerzo realizado en cada nodo para obtener mejores cotas duales.
 
-\bigskip
-
+\newpage
 
 A continuaci\'on, se presentan las cotas duales que se cuentan al salir del nodo ra\'iz en cada instancia para cada una de las combinaciones procesadas.
 

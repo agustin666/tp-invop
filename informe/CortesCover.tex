@@ -114,7 +114,7 @@ Si bien esta idea no resuelve el problema hasta la optimalidad, puede dar una mu
 
 En el problema hay que ver cuales variables se eligen para hacer lo m\'as chico posible la funci\'on objetivo, pero a la vez es importante poder hacer v\'alida la restricci\'on, eligiendo variables que tengan costos asociados altos.
 
-El algoritmo goloso dise\~nado trata de encontrar una soluci\'on teniendo en cuenta los dos factores mencionados. Lo que se hizo fue ir elegiendo las variables golosamente, para esto se orden\'o las variables de forma decreciente respecto del valor $a_i / (1-x_i^*)$. Este valor asociado tiene el doble objetivo de tratar de tomar variables con costos asociados altos, pero que tengan un peque\~no valor asociado en la funci\'on objetivo.
+El algoritmo goloso dise\~nado trata de encontrar una soluci\'on teniendo en cuenta los dos factores mencionados. Lo que se hizo fue ir eligiendo las variables golosamente, para esto se orden\'o las variables de forma decreciente respecto del valor $a_i / (1-x_i^*)$. Este valor asociado tiene el doble objetivo de tratar de tomar variables con costos asociados altos, pero que tengan un peque\~no valor asociado en la funci\'on objetivo.
 
 Luego de tener ordenadas las variables por el criterio expuesto, se van tomando las variables golosamente hasta que se cumpla la restricci\'on. Cuando sucede esto solo resta saber si la funci\'on objetivo tiene valor por debajo de 1 o no.
 
@@ -132,7 +132,7 @@ Esta t\'ecnica se basa en obtener el \'optimo para un problema, asumiendo que ya
 
 En este caso, el problema que se ir\'a resolviendo ser\'a el de obtener la m\'inima funci\'on objetivo si se usa hasta el item $i$ de los $n$ disponibles, y se quiere sobrepasar el peso \~b.
 
-Cuando $i$ sea igual a $n$ y \~b sea igual a b, se estar\'a obteniendo la m\'imina funci\'on objetivo utilizando todos los items y teniendo como restricci\'on la desigualdad original del problema que se necesitaba resolver. Luego, si este valor es menor a 1 significa que hay una desigualdad cover violada para introducir como plano de corte.
+Cuando $i$ sea igual a $n$ y \~b sea igual a b, se estar\'a obteniendo la m\'inima funci\'on objetivo utilizando todos los items y teniendo como restricci\'on la desigualdad original del problema que se necesitaba resolver. Luego, si este valor es menor a 1 significa que hay una desigualdad cover violada para introducir como plano de corte.
 
 
 
@@ -158,5 +158,5 @@ Sin embargo, se nota que el algoritmo de programaci\'on din\'amica tiene una com
 Algo interesante a realizar con una desigualdad v\'alida que se quiere ingresar como plano de corte, es analizar la posibilidad de \emph{liftearla} para fortalecerla. \emph{Liftear} una desigualdad por menor o igual significa hacer crecer los coeficientes que acompa\~nan a las variables, obviamente siempre y cuando la desigualdad siga siendo v\'alida. Cuando se habla de hacer crecer los coeficientes puede ser tanto incrementando los de las variables que ya se encuentran en la desigualdad, como agregando variables a la desigualdad con coeficientes positivos.
 
 
-En el caso de las desigualdades cover existe un lifteo que es simple de demostrar su validez y a la vez es simple de implementar. Si ya se cuenta una desigualdad cover, se puede agregar a la desigualdad cualquier variable que tenga un $a_i$ asociado mayor o igual a todos los $a_i$ de las varibles que ya se encuentran en la desigualdad.
+En el caso de las desigualdades cover existe un lifteo que es simple de demostrar su validez y a la vez es simple de implementar. Si ya se cuenta una desigualdad cover, se puede agregar a la desigualdad cualquier variable que tenga un $a_i$ asociado mayor o igual a todos los $a_i$ de las variables que ya se encuentran en la desigualdad.
 

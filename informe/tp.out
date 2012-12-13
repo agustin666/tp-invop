@@ -1,13 +1,13 @@
-\BOOKMARK [1][-]{section.1}{Introducci\363n}{}
-\BOOKMARK [1][-]{section.2}{Cortes Cover}{}
-\BOOKMARK [2][-]{subsection.2.1}{Formulaci\363n}{section.2}
-\BOOKMARK [2][-]{subsection.2.2}{Algoritmo de separaci\363n}{section.2}
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Greedy}{subsection.2.2}
-\BOOKMARK [3][-]{subsubsection.2.2.2}{Programaci\363n Din\341mica}{subsection.2.2}
-\BOOKMARK [2][-]{subsection.2.3}{Lifteo}{section.2}
-\BOOKMARK [1][-]{section.3}{Cortes Clique}{}
-\BOOKMARK [2][-]{subsection.3.1}{Formulaci\363n}{section.3}
-\BOOKMARK [2][-]{subsection.3.2}{Construcci\363n del grafo}{section.3}
-\BOOKMARK [2][-]{subsection.3.3}{Algoritmo de separaci\363n}{section.3}
-\BOOKMARK [1][-]{section.4}{Resultados}{}
-\BOOKMARK [1][-]{section.5}{Conclusiones}{}
+\BOOKMARK [1][-]{section.1}{Introducci\363n}{}% 1
+\BOOKMARK [1][-]{section.2}{Cortes Cover}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Formulaci\363n}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Algoritmo de separaci\363n}{section.2}% 4
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Greedy}{subsection.2.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Programaci\363n Din\341mica}{subsection.2.2}% 6
+\BOOKMARK [2][-]{subsection.2.3}{Lifteo}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Cortes Clique}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Formulaci\363n}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Construcci\363n del grafo}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Algoritmo de separaci\363n}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Resultados}{}% 12
+\BOOKMARK [1][-]{section.5}{Conclusiones}{}% 13
